@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using yt_dlp_Interface.Brancher;
 using yt_dlp_Interface.Libs.Console;
 using yt_dlp_Interface.Libs.Server;
@@ -23,23 +22,26 @@ internal class YtdlpInterface
         string url;
         while (true)
         {
-            url = Input.Inputter("Please enter url.");
-            if (!Uri.IsWellFormedUriString(url, UriKind.Absolute) || !Http.TryAccess(url))
+            while (true)
             {
-                Console.WriteLine("That url can't access.");
-                continue;
+                url = Input.Inputter("Please enter url.");
+                if (!Uri.IsWellFormedUriString(url, UriKind.Absolute) || !Http.TryAccess(url))
+                {
+                    Console.WriteLine("That url can't access.");
+                    continue;
+                }
+                break;
             }
-            break;
+
+            List<string> foundDirectories = Environment.GetEnvironmentVariable("Path")!
+                .Split(';')
+                .Where(item => !string.IsNullOrWhiteSpace(item))
+                .Where(item => File.Exists(Path.Combine(item, "yt-dlp.exe")))
+                .ToList();
+
+            Executer executer = new(foundDirectories[0]);
+            executer.Execute(url, ArgumentMaker.GetArguments().ToList());
+            Process.Start("explorer.exe", Path.Combine(Directory.GetCurrentDirectory(), "Output"));
         }
-
-        List<string> foundDirectories = Environment.GetEnvironmentVariable("Path")!
-            .Split(';')
-            .Where(item => !string.IsNullOrWhiteSpace(item))
-            .Where(item => File.Exists(Path.Combine(item, "yt-dlp.exe")))
-            .ToList();
-
-        Executer executer = new(foundDirectories[0]);
-        executer.Execute(url, ArgumentMaker.GetArguments().ToList());
-        Process.Start("explorer.exe", Path.Combine(Directory.GetCurrentDirectory(), "Output"));
     }
 }
