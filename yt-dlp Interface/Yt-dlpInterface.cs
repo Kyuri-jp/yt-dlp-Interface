@@ -40,7 +40,8 @@ internal class YtdlpInterface
                 .ToList();
             if (foundDirectories.Count <= 0)
             {
-                Console.ColoredWriteLine("yt-dlp.exe was not found.", ConsoleColor.Red);
+                Console.ColoredWriteLine("yt-dlp.exe was not found.\n" +
+                    "Please try again atfer download yt-dlp", ConsoleColor.Red);
                 break;
             }
 
