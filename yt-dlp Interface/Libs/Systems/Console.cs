@@ -11,7 +11,7 @@
                 WriteLine(message);
                 string? read = ReadLine();
                 if (allowNull || !string.IsNullOrEmpty(read)) return read ?? string.Empty;
-                WriteLine("Plase enter any value.");
+                ColoredWriteLine("Plase enter any value.", ConsoleColor.Yellow);
             }
         }
 
@@ -25,7 +25,7 @@
                     return true;
                 if (input == "n")
                     return false;
-                WriteLine("Please enter yes(y) or no(n)");
+                ColoredWriteLine("Please enter yes(y) or no(n)", ConsoleColor.Yellow);
             }
         }
 
