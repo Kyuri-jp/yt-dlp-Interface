@@ -6,42 +6,32 @@ namespace yt_dlp_Interface.Brancher.Video.Options
 {
     internal class Formats : IOptionSelector
     {
+        private static string OptionSelector(string prompt, IEnumerable<string> validOptions)
+        {
+            while (true)
+            {
+                string input = Console.Ask(prompt);
+                if (validOptions.Any(option => input.Equals(option, StringComparison.CurrentCultureIgnoreCase)))
+                    return input.ToLower();
+                Console.ColoredWriteLine("Selected option is unexpected.", ConsoleColor.Yellow);
+            }
+        }
+
         string IOptionSelector.Ask()
         {
             List<string> values = [];
             var formatNames = Enum<Yt_dlp.Options.Video.Formats>.GetNames();
             var videoQualityNames = Enum<Yt_dlp.Options.VideoQuality>.GetNames();
             var audioQualityNames = Enum<Yt_dlp.Options.AudioQuality>.GetNames();
-            while (true)
-            {
-                string selectedFormat = Console.Ask($"Select any formats. ({string.Join(',', formatNames)})");
-                if (formatNames.Any(name => selectedFormat.Equals(name, StringComparison.CurrentCultureIgnoreCase)))
-                {
-                    values.Add(selectedFormat.ToLower().Replace("three", "3"));
-                    while (true)
-                    {
-                        string selectedVideoQuality = Console.Ask($"Select any video quality. ({string.Join(',', videoQualityNames)})");
-                        if (videoQualityNames.Any(name => selectedVideoQuality.Equals(name, StringComparison.CurrentCultureIgnoreCase)))
-                        {
-                            values.Add(selectedVideoQuality.ToLower());
-                            while (true)
-                            {
-                                string selectedAudioQuality = Console.Ask($"Select any video quality. ({string.Join(',', audioQualityNames)})");
-                                if (audioQualityNames.Any(name => selectedAudioQuality.Equals(name, StringComparison.CurrentCultureIgnoreCase)))
-                                {
-                                    values.Add(selectedAudioQuality.ToLower());
-                                    break;
-                                }
-                                Console.ColoredWriteLine("Selected quality is unexpected.", ConsoleColor.Yellow);
-                            }
-                            break;
-                        }
-                        Console.ColoredWriteLine("Selected quality is unexpected.", ConsoleColor.Yellow);
-                    }
-                    break;
-                }
-                Console.ColoredWriteLine("Selected format is unexpected.", ConsoleColor.Yellow);
-            }
+
+            string selectedFormat = OptionSelector($"Select any formats. ({string.Join(',', formatNames)})", formatNames);
+            values.Add(selectedFormat.Replace("three", "3"));
+
+            string selectedVideoQuality = OptionSelector($"Select any video quality. ({string.Join(',', videoQualityNames)})", videoQualityNames);
+            values.Add(selectedVideoQuality);
+
+            string selectedAudioQuality = OptionSelector($"Select any audio quality. ({string.Join(',', audioQualityNames)})", audioQualityNames);
+            values.Add(selectedAudioQuality);
 
             return string.Join(';', [.. values]);
         }
