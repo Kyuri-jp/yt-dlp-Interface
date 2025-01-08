@@ -4,6 +4,6 @@ namespace yt_dlp_Interface.Brancher
 {
     internal class BranchChainer
     {
-        internal static IEnumerable<string> Chain(List<IOptionSelector> optionSelectors) => optionSelectors.Select(@class => @class.Format(@class.Ask()));
+        internal static IEnumerable<Dictionary<string, string>> Chain(List<IOptionSelector> optionSelectors) => optionSelectors.Select(@class => @class.Format(@class.Ask()));
     }
 }

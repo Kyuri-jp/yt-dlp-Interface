@@ -18,6 +18,9 @@ namespace yt_dlp_Interface.Brancher.Video.Options
             }
         }
 
-        string IOptionSelector.Format(string value) => $"-S vcodec:{value}";
+        Dictionary<string, string> IOptionSelector.Format(string value) => new()
+        {
+            {ArgumentMaker.Flags.Codec.ToString(),$"vcodec:{value}" }
+        };
     }
 }

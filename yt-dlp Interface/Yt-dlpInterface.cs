@@ -42,7 +42,8 @@ internal class YtdlpInterface
                 Console.ColoredWriteLine("yt-dlp.exe was not found.", ConsoleColor.Red);
 
             Executer executer = new(foundDirectories[0]);
-            executer.Execute(url, ArgumentMaker.GetArguments().ToList());
+            executer.Execute(url, ArgumentMaker.MakeArguments());
+            Console.ColoredWriteLine("Done!\n", ConsoleColor.Magenta);
             Process.Start("explorer.exe", Path.Combine(Directory.GetCurrentDirectory(), "Output"));
         }
     }
