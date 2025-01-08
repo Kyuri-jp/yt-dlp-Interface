@@ -18,7 +18,14 @@ internal class YtdlpInterface
             "=============================");
 
         if (!Directory.Exists(Path.Combine(Directory.GetCurrentDirectory(), "Output")))
-            Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "Output"));
+            try
+            {
+                Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "Output"));
+            }
+            catch (IOException ex)
+            {
+                Console.ColoredWriteLine($"{ex}\n{ex.StackTrace}", ConsoleColor.Red);
+            }
         string url;
         while (true)
         {
