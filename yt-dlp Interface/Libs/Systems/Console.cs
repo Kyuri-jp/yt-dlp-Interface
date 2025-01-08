@@ -39,8 +39,8 @@
         }
 
         //Wrapper
-        internal static void WriteLine(string message) => WriteLine(message);
+        internal static void WriteLine(string message) => System.Console.WriteLine(message);
 
-        internal static string? ReadLine() => ReadLine()?.ToString();
+        internal static string? ReadLine() => System.Console.ReadLine()?.ToString();
     }
 }
