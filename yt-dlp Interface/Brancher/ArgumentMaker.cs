@@ -1,6 +1,6 @@
 ﻿using yt_dlp_Interface.Brancher.Audio.Options;
 using yt_dlp_Interface.Brancher.Interfaces;
-using yt_dlp_Interface.Libs.Console;
+using Console = yt_dlp_Interface.Libs.Systems.Console;
 
 namespace yt_dlp_Interface.Brancher
 {
@@ -19,6 +19,6 @@ namespace yt_dlp_Interface.Brancher
             new Thumbnail()
         ];
 
-        internal static IEnumerable<string> GetArguments() => Input.YesOrNo("Will you extract audio only") ? BranchChainer.Chain(audioOptions).Prepend("-x") : BranchChainer.Chain(videoOptions);
+        internal static IEnumerable<string> GetArguments() => Console.AskYesOrNo("Will you extract audio only") ? BranchChainer.Chain(audioOptions).Prepend("-x") : BranchChainer.Chain(videoOptions);
     }
 }

@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics;
 using yt_dlp_Interface.Brancher;
-using yt_dlp_Interface.Libs.Console;
 using yt_dlp_Interface.Libs.Server;
 using yt_dlp_Interface.Yt_dlp;
+using Console = yt_dlp_Interface.Libs.Systems.Console;
 
 namespace yt_dlp_Interface;
 
@@ -10,7 +10,7 @@ internal class YtdlpInterface
 {
     private static void Main()
     {
-        Console.WriteLine("=============================\n" +
+        System.Console.WriteLine("=============================\n" +
             "Welcome to yt-dlp Interface!\n" +
             "Auther : Kyuri\n" +
             "Version : 0.0.1-dev\n" +
@@ -24,10 +24,10 @@ internal class YtdlpInterface
         {
             while (true)
             {
-                url = Input.Inputter("Please enter url.");
+                url = Console.Ask("Please enter url.");
                 if (!Uri.IsWellFormedUriString(url, UriKind.Absolute) || !Http.TryAccess(url))
                 {
-                    Console.WriteLine("That url can't access.");
+                    Console.ColoredWriteLine("That url can't access.", ConsoleColor.Yellow);
                     continue;
                 }
                 break;
@@ -38,6 +38,8 @@ internal class YtdlpInterface
                 .Where(item => !string.IsNullOrWhiteSpace(item))
                 .Where(item => File.Exists(Path.Combine(item, "yt-dlp.exe")))
                 .ToList();
+            if (foundDirectories.Count <= 0)
+                Console.ColoredWriteLine("yt-dlp.exe was not found.", ConsoleColor.Red);
 
             Executer executer = new(foundDirectories[0]);
             executer.Execute(url, ArgumentMaker.GetArguments().ToList());
