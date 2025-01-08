@@ -39,7 +39,10 @@ internal class YtdlpInterface
                 .Where(item => File.Exists(Path.Combine(item, "yt-dlp.exe")))
                 .ToList();
             if (foundDirectories.Count <= 0)
+            {
                 Console.ColoredWriteLine("yt-dlp.exe was not found.", ConsoleColor.Red);
+                break;
+            }
 
             Executer executer = new(foundDirectories[0]);
             executer.Execute(url, ArgumentMaker.MakeArguments());
