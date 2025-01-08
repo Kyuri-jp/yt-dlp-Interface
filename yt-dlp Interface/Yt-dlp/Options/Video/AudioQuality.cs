@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace yt_dlp_Interface.Brancher.Video.Options
+namespace yt_dlp_Interface.Yt_dlp.Options
 {
-    internal class Quality
+    internal enum AudioQuality
     {
+        bestaudio,
+        worseaudio
     }
 }

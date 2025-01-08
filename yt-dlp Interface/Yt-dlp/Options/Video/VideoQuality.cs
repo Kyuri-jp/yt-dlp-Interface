@@ -6,13 +6,9 @@ using System.Threading.Tasks;
 
 namespace yt_dlp_Interface.Yt_dlp.Options
 {
-    internal enum Quality
+    internal enum VideoQuality
     {
-        best,
         bestvideo,
-        bestaudio,
-        worse,
-        worsevideo,
-        worseaudio
+        worsevideo
     }
 }

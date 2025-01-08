@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using Console = yt_dlp_Interface.Libs.Systems.Console;
 
 namespace yt_dlp_Interface.Yt_dlp
 {
@@ -13,7 +14,7 @@ namespace yt_dlp_Interface.Yt_dlp
                 WorkingDirectory = Path.Combine(Directory.GetCurrentDirectory(), "Output"),
             };
 
-            Console.WriteLine($"{string.Join(' ', args)} {url}");
+            Console.ColoredWriteLine($"Created Argument => {string.Join(' ', args)} {url}", ConsoleColor.Green);
             Process.Start(psInfo)!.WaitForExit();
         }
     }
