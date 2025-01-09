@@ -1,5 +1,4 @@
-﻿using yt_dlp_Interface.Brancher.Interfaces;
-using yt_dlp_Interface.Libs.Server;
+﻿using yt_dlp_Interface.Libs.Server;
 using Console = yt_dlp_Interface.Libs.Systems.Console;
 
 namespace yt_dlp_Interface.Brancher.General

@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace yt_dlp_Interface.Libs.Systems
+﻿namespace yt_dlp_Interface.Libs.Systems
 {
     internal static class Console
     {
