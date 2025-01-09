@@ -2,12 +2,18 @@
 
 namespace yt_dlp_Interface.Libs.Client
 {
-    internal class Preset
+    internal class Preset(string settingFile)
     {
-        internal static Dictionary<string, string> Parse(string file)
+        internal Dictionary<string, string> Setting
+        {
+            set => Override(value);
+            get => Parse();
+        }
+
+        internal Dictionary<string, string> Parse()
         {
             Dictionary<string, string> value = [];
-            string[] fileData = File.ReadAllLines(file);
+            string[] fileData = File.ReadAllLines(settingFile);
             foreach (var item in fileData)
             {
                 if (item[0] == '#') continue;
@@ -16,15 +22,29 @@ namespace yt_dlp_Interface.Libs.Client
             return value;
         }
 
-        internal static void Write(string file, Dictionary<string, string> value)
+        internal void Override(Dictionary<string, string> value)
         {
-            Dictionary<string, string> fileData = Parse(file);
+            Dictionary<string, string> fileData = Parse();
             foreach (var item in value.Where(item => fileData.ContainsKey(item.Key)))
                 fileData[item.Key] = item.Value;
 
             List<string> writeList = [];
             writeList.AddRange(fileData.Select(item => $"{item.Key}={item.Value}"));
-            File.WriteAllLines(file, writeList, Encode.GetEncoding(file));
+            File.WriteAllLines(settingFile, writeList, Encode.GetEncoding(settingFile));
+        }
+
+        internal void Add(KeyValuePair<string, string> value)
+        {
+            Dictionary<string, string> result = Parse();
+            result[value.Key] = value.Value;
+            Override(result);
+        }
+
+        internal void Remove(KeyValuePair<string, string> value)
+        {
+            Dictionary<string, string> result = Parse();
+            result.Remove(value.Key);
+            Override(result);
         }
     }
 }
