@@ -19,7 +19,6 @@ internal class YtdlpInterface
             "Auther : Kyuri\n" +
             "Version : 0.0.1-dev\n" +
             "License : MIT License\n" +
-            "Used Libs : System.Configuration.ConfigurationManager(Micorosoft/MIT License)\n" +
             "=============================");
 
         if (!Directory.Exists(Path.Combine(Directory.GetCurrentDirectory(), "Output")))
