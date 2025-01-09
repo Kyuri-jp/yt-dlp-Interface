@@ -29,6 +29,38 @@
             }
         }
 
+        internal static string Select(string message, List<string> list, bool showList = true)
+        {
+            ArgumentNullException.ThrowIfNull(message);
+            while (true)
+            {
+                if (showList)
+                    foreach (var item in list)
+                        ColoredWriteLine(item, ConsoleColor.Cyan);
+                string input = Ask(message);
+                if (list.Contains(input))
+                    return input;
+                ColoredWriteLine("Please enter correct value.\n", ConsoleColor.Yellow);
+            }
+        }
+
+        internal static string Select<TValue>(string message, Dictionary<string, TValue> dict, bool showList = true)
+        {
+            {
+                ArgumentNullException.ThrowIfNull(message);
+                while (true)
+                {
+                    if (showList)
+                        foreach (var pair in dict)
+                            ColoredWriteLine($"{pair.Key} : {pair.Value}", ConsoleColor.Cyan);
+                    string input = Ask(message);
+                    if (dict.ContainsKey(input))
+                        return input;
+                    ColoredWriteLine("Please enter correct value.\n", ConsoleColor.Yellow);
+                }
+            }
+        }
+
         //Output
         internal static void ColoredWriteLine(string message, ConsoleColor consoleColor)
         {
