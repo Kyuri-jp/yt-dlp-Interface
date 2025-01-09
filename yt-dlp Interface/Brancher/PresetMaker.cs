@@ -11,7 +11,7 @@ namespace yt_dlp_Interface.Brancher
         internal static void Make()
         {
             if (!File.Exists(settingFile))
-                File.Create(settingFile);
+                File.Create(settingFile).Dispose();
             var presetInfo = preset.Format(preset.Ask()).ToDictionary(pair => pair.Key, pair => pair.Value.Split(';').ToList());
             if (presetInterface.Setting.Any(presetName => presetInterface.Setting.ContainsKey(presetInfo.Keys.ElementAt(0))))
                 if (!Console.AskYesOrNo("This preset name is already exists.\nCan you execuse override the preset?"))
