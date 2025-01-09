@@ -16,19 +16,4 @@
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="9.0.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="Presets.Designer.cs">
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Presets.settings</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Presets.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Presets.Designer.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-
 </Project>
