@@ -15,7 +15,14 @@ namespace yt_dlp_Interface.Yt_dlp
             };
 
             Console.ColoredWriteLine($"Created Argument => {string.Join(' ', args)} {url}", ConsoleColor.Green);
-            Process.Start(psInfo)!.WaitForExit();
+            try
+            {
+                Process.Start(psInfo)!.WaitForExit();
+            }
+            catch (Exception ex)
+            {
+                Console.ColoredWriteLine($"{ex}\n{ex.StackTrace}", ConsoleColor.Red);
+            }
         }
     }
 }
