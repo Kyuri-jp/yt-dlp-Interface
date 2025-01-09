@@ -9,7 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Brancher\General\" />
     <Folder Include="Brancher\Abstract\" />
   </ItemGroup>
 
