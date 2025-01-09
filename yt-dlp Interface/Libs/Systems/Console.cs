@@ -48,16 +48,18 @@ namespace yt_dlp_Interface.Libs.Systems
 
         internal static string Select<TValue>(string message, Dictionary<string, TValue> dict, bool showList = true)
         {
-            ArgumentNullException.ThrowIfNull(message);
-            while (true)
             {
-                if (showList)
-                    foreach (var pair in dict)
-                        ColoredWriteLine($"{pair.Key} : {pair.Value}", ConsoleColor.Cyan);
-                string input = Ask(message);
-                if (dict.ContainsKey(input))
-                    return input;
-                ColoredWriteLine("Please enter correct value.\n", ConsoleColor.Yellow);
+                ArgumentNullException.ThrowIfNull(message);
+                while (true)
+                {
+                    if (showList)
+                        foreach (var pair in dict)
+                            ColoredWriteLine($"{pair.Key} : {pair.Value}", ConsoleColor.Cyan);
+                    string input = Ask(message);
+                    if (dict.ContainsKey(input))
+                        return input;
+                    ColoredWriteLine("Please enter correct value.\n", ConsoleColor.Yellow);
+                }
             }
         }
 

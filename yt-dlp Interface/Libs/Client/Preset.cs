@@ -25,18 +25,24 @@ namespace yt_dlp_Interface.Libs.Client
         internal void Override(Dictionary<string, List<string>> value)
         {
             Dictionary<string, List<string>> fileData = Parse();
-            foreach (var item in value.Where(item => fileData.ContainsKey(item.Key)))
-                fileData[item.Key] = item.Value;
+            foreach (var pair in value)
+                if (fileData.ContainsKey(pair.Key))
+                    fileData[pair.Key] = pair.Value;
+                else
+                    fileData.Add(pair.Key, pair.Value);
 
             List<string> writeList = [];
-            writeList.AddRange(fileData.Select(item => $"{item.Key}={string.Join(' ', item.Value).Replace(";", "")}"));
+            writeList.AddRange(fileData.Select(item => $"{item.Key}={string.Join(';', item.Value)}"));
             File.WriteAllLines(settingFile, writeList, Encode.GetEncoding(settingFile));
         }
 
         internal void Add(KeyValuePair<string, List<string>> value)
         {
             Dictionary<string, List<string>> result = Parse();
-            result[value.Key] = value.Value;
+            if (result.ContainsKey(value.Key))
+                result[value.Key] = value.Value;
+            else
+                result.Add(value.Key, value.Value);
             Override(result);
         }
 

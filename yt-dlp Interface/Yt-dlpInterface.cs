@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using yt_dlp_Interface.Brancher;
 using yt_dlp_Interface.Brancher.General;
+using yt_dlp_Interface.Libs.Client;
 using yt_dlp_Interface.Yt_dlp;
 using Console = yt_dlp_Interface.Libs.Systems.Console;
 
@@ -8,6 +9,9 @@ namespace yt_dlp_Interface;
 
 internal class YtdlpInterface
 {
+    private static readonly string settingFile = Path.Combine(Directory.GetCurrentDirectory(), "setting.ydis");
+    private static readonly Preset presetInterface = new(settingFile);
+
     private static void Main()
     {
         System.Console.WriteLine("=============================\n" +
@@ -40,7 +44,24 @@ internal class YtdlpInterface
 
         while (true)
         {
-            executer.Execute(Url.Ask(), ArgumentMaker.MakeArguments());
+            List<string> argument = [];
+            if (Console.AskYesOrNo("Do you use any presets?"))
+            {
+                if (Console.AskYesOrNo("Do you make new preset or modify any preset?"))
+                {
+                    PresetMaker.Make();
+                    Console.ColoredWriteLine("Created or Modified the preset.\n", ConsoleColor.Magenta);
+                    continue;
+                }
+                argument = presetInterface.Setting[Console.Select("Select any preset.", presetInterface.Setting
+                                                                                            .ToDictionary(pair => pair.Key,
+                                                                                                          pair => string.Join(" ", pair.Value)))];
+            }
+            else
+            {
+                argument = ArgumentMaker.MakeArguments();
+            }
+            executer.Execute(Url.Ask(), argument);
             Console.ColoredWriteLine("Done!\n", ConsoleColor.Magenta);
             Process.Start("explorer.exe", Path.Combine(Directory.GetCurrentDirectory(), "Output"));
         }
