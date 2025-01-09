@@ -46,18 +46,24 @@ internal class YtdlpInterface
             List<string> argument = [];
             if (Console.AskYesOrNo("Do you use any presets?"))
             {
-                if (Console.AskYesOrNo("Do you make new preset or modify any preset?"))
+                if (!File.Exists(settingFile))
                 {
-                    PresetMaker.Make();
-                    Console.ColoredWriteLine("Created or Modified the preset.\n", ConsoleColor.Magenta);
+                    Console.ColoredWriteLine("Setting File is not exists.\nPlase make any presets.\nHow to : *Do you use any presets?*->n *Do you make new preset or modify any preset?*->y", ConsoleColor.Red);
                     continue;
                 }
+
                 argument = presetInterface.Setting[Console.Select("Select any preset.", presetInterface.Setting
                                                                                             .ToDictionary(pair => pair.Key,
                                                                                                           pair => string.Join(" ", pair.Value)))];
             }
             else
             {
+                if (Console.AskYesOrNo("Do you make new preset or modify any preset?"))
+                {
+                    PresetMaker.Make();
+                    Console.ColoredWriteLine("Created or Modified the preset.\n", ConsoleColor.Magenta);
+                    continue;
+                }
                 argument = ArgumentMaker.MakeArguments();
             }
             executer.Execute(Url.Ask(), argument);
