@@ -20,10 +20,10 @@
             ArgumentNullException.ThrowIfNull(message);
             while (true)
             {
-                string input = Ask($"{message} (y/n)");
-                if (input == "y")
+                ConsoleKeyInfo input = System.Console.ReadKey();
+                if (input.Key == ConsoleKey.Y)
                     return true;
-                if (input == "n")
+                if (input.Key == ConsoleKey.N)
                     return false;
                 ColoredWriteLine("Please enter yes(y) or no(n)", ConsoleColor.Yellow);
             }
