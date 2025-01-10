@@ -21,7 +21,7 @@
             while (true)
             {
                 WriteLine($"{message} (y/n)");
-                ConsoleKeyInfo input = System.Console.ReadKey();
+                ConsoleKeyInfo input = System.Console.ReadKey(true);
                 if (input.Key == ConsoleKey.Y)
                     return true;
                 if (input.Key == ConsoleKey.N)
