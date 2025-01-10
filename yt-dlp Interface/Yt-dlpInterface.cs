@@ -1,16 +1,20 @@
 ﻿using System.Diagnostics;
 using yt_dlp_Interface.Brancher;
-using yt_dlp_Interface.Libs.Console;
-using yt_dlp_Interface.Libs.Server;
+using yt_dlp_Interface.Brancher.General;
+using yt_dlp_Interface.Libs.Client;
 using yt_dlp_Interface.Yt_dlp;
+using Console = yt_dlp_Interface.Libs.Systems.Console;
 
 namespace yt_dlp_Interface;
 
 internal class YtdlpInterface
 {
+    private static readonly string settingFile = Path.Combine(Directory.GetCurrentDirectory(), "setting.ydis");
+    private static readonly Preset presetInterface = new(settingFile);
+
     private static void Main()
     {
-        Console.WriteLine("=============================\n" +
+        System.Console.WriteLine("=============================\n" +
             "Welcome to yt-dlp Interface!\n" +
             "Auther : Kyuri\n" +
             "Version : 0.0.1-dev\n" +
@@ -19,28 +23,51 @@ internal class YtdlpInterface
 
         if (!Directory.Exists(Path.Combine(Directory.GetCurrentDirectory(), "Output")))
             Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "Output"));
-        string url;
+
+        List<string> foundDirectories = Environment.GetEnvironmentVariable("Path")!
+            .Split(';')
+            .Where(item => !string.IsNullOrWhiteSpace(item))
+            .Where(item => File.Exists(Path.Combine(item, "yt-dlp.exe")))
+            .ToList();
+
+        if (foundDirectories.Count <= 0)
+        {
+            Console.ColoredWriteLine("yt-dlp.exe was not found.\n" +
+                "Please try again atfer download yt-dlp", ConsoleColor.Red);
+            Console.WriteLine("Please enter any keys...");
+            System.Console.ReadKey();
+            Environment.Exit(0);
+        }
+
+        Executer executer = new(foundDirectories[0]);
+
         while (true)
         {
-            while (true)
+            List<string> argument = [];
+            if (Console.AskYesOrNo("Do you use any presets?"))
             {
-                url = Input.Inputter("Please enter url.");
-                if (!Uri.IsWellFormedUriString(url, UriKind.Absolute) || !Http.TryAccess(url))
+                if (!File.Exists(settingFile))
                 {
-                    Console.WriteLine("That url can't access.");
+                    Console.ColoredWriteLine("Setting File is not exists.\nPlase make any presets.\nHow to : *Do you use any presets?*->n *Do you make new preset or modify any preset?*->y", ConsoleColor.Red);
                     continue;
                 }
-                break;
+
+                argument = presetInterface.Setting[Console.Select("Select any preset.", presetInterface.Setting
+                                                                                            .ToDictionary(pair => pair.Key,
+                                                                                                          pair => string.Join(" ", pair.Value)))];
             }
-
-            List<string> foundDirectories = Environment.GetEnvironmentVariable("Path")!
-                .Split(';')
-                .Where(item => !string.IsNullOrWhiteSpace(item))
-                .Where(item => File.Exists(Path.Combine(item, "yt-dlp.exe")))
-                .ToList();
-
-            Executer executer = new(foundDirectories[0]);
-            executer.Execute(url, ArgumentMaker.GetArguments().ToList());
+            else
+            {
+                if (Console.AskYesOrNo("Do you make new preset or modify any preset?"))
+                {
+                    PresetMaker.Make();
+                    Console.ColoredWriteLine("Created or Modified the preset.\n", ConsoleColor.Magenta);
+                    continue;
+                }
+                argument = ArgumentMaker.MakeArguments();
+            }
+            executer.Execute(Url.Ask(), argument);
+            Console.ColoredWriteLine("Done!\n", ConsoleColor.Magenta);
             Process.Start("explorer.exe", Path.Combine(Directory.GetCurrentDirectory(), "Output"));
         }
     }

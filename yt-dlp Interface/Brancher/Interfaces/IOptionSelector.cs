@@ -4,6 +4,6 @@
     {
         internal string Ask();
 
-        internal string Format(string value);
+        internal Dictionary<string, string> Format(string value);
     }
 }
