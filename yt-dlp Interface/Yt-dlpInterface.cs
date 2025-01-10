@@ -9,9 +9,6 @@ namespace yt_dlp_Interface;
 
 internal class YtdlpInterface
 {
-    private static readonly string settingFile = Path.Combine(Directory.GetCurrentDirectory(), "setting.ydis");
-    private static readonly Preset presetInterface = new(settingFile);
-
     private static void Main()
     {
         System.Console.WriteLine("=============================\n" +
