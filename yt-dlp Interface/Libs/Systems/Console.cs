@@ -20,7 +20,7 @@
             ArgumentNullException.ThrowIfNull(message);
             while (true)
             {
-                WriteLine(message);
+                WriteLine($"{message} (y/n)");
                 ConsoleKeyInfo input = System.Console.ReadKey();
                 if (input.Key == ConsoleKey.Y)
                     return true;
