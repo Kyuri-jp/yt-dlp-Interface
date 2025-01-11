@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using yt_dlp_Interface.Applications.Interfaces;
+﻿using yt_dlp_Interface.Applications.Interfaces;
 using yt_dlp_Interface.Commands;
 using yt_dlp_Interface.Commands.Interfaces;
 using yt_dlp_Interface.Libs.Systems;
