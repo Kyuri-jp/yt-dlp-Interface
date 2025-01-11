@@ -18,8 +18,11 @@ internal class YtdlpInterface
     private static readonly Dictionary<IApplication, string> Applications = new()
     {
         {new Argumentselector(), "Argument Selector"},
-        {new Preset(), "Preset Selector"}
+        {new Preset(), "Preset Selector"},
+        {new Help(), "Show Applications Help"},
     };
+
+    internal static Dictionary<IApplication, string> ApplicationDatas => Applications;
 
     private static void Main()
     {

@@ -1,4 +1,5 @@
-﻿using yt_dlp_Interface.Applications.Interfaces;
+﻿using System.Runtime.CompilerServices;
+using yt_dlp_Interface.Applications.Interfaces;
 using yt_dlp_Interface.Commands;
 using yt_dlp_Interface.Commands.Interfaces;
 using yt_dlp_Interface.Libs.Systems;
@@ -13,10 +14,10 @@ namespace yt_dlp_Interface.Applications.Preset
         private static readonly Libs.Client.Preset presetInterface = new(settingFile);
 
         public Dictionary<ICommand, string> Commands => new()
-            {
-                { new Commands.Preset.Create(presetInterface), "Create new preset" },
-                { new Commands.Preset.Load(presetInterface), "Load preset" },
-            };
+        {
+            { new Commands.Preset.Create(presetInterface), "Create new preset" },
+            { new Commands.Preset.Load(presetInterface), "Load preset" },
+        };
 
         void IApplication.Run()
         {
@@ -25,6 +26,11 @@ namespace yt_dlp_Interface.Applications.Preset
                 string command = Console.AskLikeCui("Preset");
                 if (command == "exit")
                     break;
+                if (command.Equals("help", StringComparison.CurrentCultureIgnoreCase))
+                {
+                    ShowHelp<ICommand>.ShowHelps(Commands);
+                    continue;
+                }
                 CommandRunner.RunCommand(command, Commands);
             }
         }
