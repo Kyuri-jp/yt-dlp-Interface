@@ -69,7 +69,7 @@
                 System.Console.Write($"\n{Name}> ");
                 string? read = ReadLine()?.Trim();
                 if (read != null && read.Equals("exit", StringComparison.CurrentCultureIgnoreCase))
-                    return string.Empty;
+                    return "exit";
                 if (!string.IsNullOrEmpty(read))
                     return read;
             }

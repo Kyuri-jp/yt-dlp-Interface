@@ -18,7 +18,15 @@ namespace yt_dlp_Interface.Applications.Preset
                 { new Commands.Preset.Load(presetInterface), "Load preset" },
             };
 
-        void IApplication.Run() =>
-            CommandRunner.RunCommand(Console.AskLikeCui("Preset"), Commands);
+        void IApplication.Run()
+        {
+            while (true)
+            {
+                string command = Console.AskLikeCui("Preset");
+                if (command == "exit")
+                    break;
+                CommandRunner.RunCommand(command, Commands);
+            }
+        }
     }
 }
