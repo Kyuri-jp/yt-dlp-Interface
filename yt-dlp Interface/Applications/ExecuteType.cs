@@ -7,5 +7,11 @@
             EnterUrl,
             Continue
         }
+
+        internal enum Flags
+        {
+            ExecuteType,
+            Argument
+        }
     }
 }

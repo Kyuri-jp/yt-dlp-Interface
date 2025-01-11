@@ -23,6 +23,8 @@ namespace yt_dlp_Interface.Yt_dlp
             {
                 Console.ColoredWriteLine($"{ex}\n{ex.StackTrace}", ConsoleColor.Red);
             }
+            Console.ColoredWriteLine("Done!\n", ConsoleColor.Magenta);
+            Process.Start("explorer.exe", Path.Combine(Directory.GetCurrentDirectory(), "Output"));
         }
     }
 }

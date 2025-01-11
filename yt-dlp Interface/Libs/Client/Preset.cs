@@ -4,6 +4,8 @@ namespace yt_dlp_Interface.Libs.Client
 {
     internal class Preset(string settingFile)
     {
+        internal string SettingFile => settingFile;
+
         internal Dictionary<string, List<string>> Setting
         {
             set => Override(value);

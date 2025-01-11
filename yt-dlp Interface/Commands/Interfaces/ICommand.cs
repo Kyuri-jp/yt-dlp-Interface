@@ -4,6 +4,6 @@
     {
         internal Dictionary<string, string> Arguments { get; }
 
-        internal void Execute(List<string> arguments);
+        internal void Execute(Dictionary<string, List<string>> arguments);
     }
 }
