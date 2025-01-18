@@ -1,7 +1,7 @@
-﻿using System.Diagnostics;
-using yt_dlp_Interface.Brancher;
-using yt_dlp_Interface.Brancher.General;
-using yt_dlp_Interface.Libs.Client;
+﻿using yt_dlp_Interface.Applications;
+using yt_dlp_Interface.Applications.ArgumentSelector;
+using yt_dlp_Interface.Applications.Interfaces;
+using yt_dlp_Interface.Applications.Preset;
 using yt_dlp_Interface.Yt_dlp;
 using Console = yt_dlp_Interface.Libs.Systems.Console;
 
@@ -9,8 +9,18 @@ namespace yt_dlp_Interface;
 
 internal class YtdlpInterface
 {
-    private static readonly string settingFile = Path.Combine(Directory.GetCurrentDirectory(), "setting.ydis");
-    private static readonly Preset presetInterface = new(settingFile);
+    private static Executer? executer;
+
+    internal static Executer YtDlpExecuter => executer == null ? throw new ArgumentNullException() : executer!;
+
+    private static readonly Dictionary<IApplication, string> Applications = new()
+    {
+        {new Argumentselector(), "Argument Selector"},
+        {new Preset(), "Preset Selector"},
+        {new Help(), "Show Applications Help"},
+    };
+
+    internal static Dictionary<IApplication, string> ApplicationDatas => Applications;
 
     private static void Main()
     {
@@ -39,36 +49,11 @@ internal class YtdlpInterface
             Environment.Exit(0);
         }
 
-        Executer executer = new(foundDirectories[0]);
+        executer = new(foundDirectories[0]);
 
         while (true)
         {
-            List<string> argument = [];
-            if (Console.AskYesOrNo("Do you use any presets?"))
-            {
-                if (!File.Exists(settingFile))
-                {
-                    Console.ColoredWriteLine("Setting File is not exists.\nPlase make any presets.\nHow to : *Do you use any presets?*->n *Do you make new preset or modify any preset?*->y", ConsoleColor.Red);
-                    continue;
-                }
-
-                argument = presetInterface.Setting[Console.Select("Select any preset.", presetInterface.Setting
-                                                                                            .ToDictionary(pair => pair.Key,
-                                                                                                          pair => string.Join(" ", pair.Value)))];
-            }
-            else
-            {
-                if (Console.AskYesOrNo("Do you make new preset or modify any preset?"))
-                {
-                    PresetMaker.Make();
-                    Console.ColoredWriteLine("Created or Modified the preset.\n", ConsoleColor.Magenta);
-                    continue;
-                }
-                argument = ArgumentMaker.MakeArguments();
-            }
-            executer.Execute(Url.Ask(), argument);
-            Console.ColoredWriteLine("Done!\n", ConsoleColor.Magenta);
-            Process.Start("explorer.exe", Path.Combine(Directory.GetCurrentDirectory(), "Output"));
+            ApplicationRunner.RunApplication(Console.AskLikeCui(), Applications);
         }
     }
 }
