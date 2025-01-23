@@ -10,6 +10,8 @@
 
   <ItemGroup>
     <Folder Include="Brancher\Abstract\" />
+    <Folder Include="Commands\ArgumentSelector\Video\" />
+    <Folder Include="Commands\ArgumentSelector\General\" />
   </ItemGroup>
 
 </Project>
