@@ -9,18 +9,18 @@ namespace yt_dlp_Interface;
 
 internal class YtdlpInterface
 {
-    private static Executer? executer;
+    private static Executer? executer = null;
 
     internal static Executer YtDlpExecuter => executer == null ? throw new ArgumentNullException() : executer!;
 
-    private static readonly SortedDictionary<IApplication, string> Applications = new()
+    private static readonly Dictionary<IApplication, string> Applications = new()
     {
         {new Argumentselector(), "Argument Selector"},
         {new Preset(), "Preset Selector"},
         {new Help(), "Show Applications Help"},
     };
 
-    internal static SortedDictionary<IApplication, string> ApplicationDatas => Applications;
+    internal static Dictionary<IApplication, string> ApplicationDatas => Applications;
 
     private static void Main()
     {
@@ -52,7 +52,7 @@ internal class YtdlpInterface
 
         while (true)
         {
-            ApplicationRunner.RunApplication(Console.AskLikeCui(), Applications.ToDictionary());
+            ApplicationRunner.RunApplication(Console.AskLikeCui(), Applications);
         }
     }
 }

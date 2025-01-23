@@ -12,7 +12,7 @@ namespace yt_dlp_Interface.Applications.Preset
 
         private static readonly Libs.Client.Preset presetInterface = new(settingFile);
 
-        public SortedDictionary<ICommand, string> Commands => new()
+        public Dictionary<ICommand, string> Commands => new()
         {
             { new Commands.Preset.Create(presetInterface), "Create new preset" },
             { new Commands.Preset.Load(presetInterface), "Load preset" },

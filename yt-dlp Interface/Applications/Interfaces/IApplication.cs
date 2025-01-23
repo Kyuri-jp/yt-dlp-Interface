@@ -4,7 +4,7 @@ namespace yt_dlp_Interface.Applications.Interfaces
 {
     internal interface IApplication
     {
-        internal SortedDictionary<ICommand, string> Commands { get; }
+        internal Dictionary<ICommand, string> Commands { get; }
 
         internal void Run();
     }
