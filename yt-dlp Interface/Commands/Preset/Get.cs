@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using yt_dlp_Interface.Commands.Interfaces;
-using yt_dlp_Interface.Libs.Systems;
+﻿using yt_dlp_Interface.Commands.Interfaces;
 using Console = yt_dlp_Interface.Libs.Systems.Console;
 
 namespace yt_dlp_Interface.Commands.Preset
