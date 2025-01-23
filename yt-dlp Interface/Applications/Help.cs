@@ -6,7 +6,7 @@ namespace yt_dlp_Interface.Applications
 {
     internal class Help : IApplication
     {
-        Dictionary<ICommand, string> IApplication.Commands => throw new NotImplementedException();
+        SortedDictionary<ICommand, string> IApplication.Commands => throw new NotImplementedException();
 
         void IApplication.Run() => ShowHelp<IApplication>.ShowHelps(YtdlpInterface.ApplicationDatas);
     }

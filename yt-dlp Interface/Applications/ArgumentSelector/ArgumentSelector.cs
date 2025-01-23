@@ -7,7 +7,7 @@ namespace yt_dlp_Interface.Applications.ArgumentSelector
 {
     internal class Argumentselector : IApplication
     {
-        Dictionary<ICommand, string> IApplication.Commands => throw new NotImplementedException();
+        SortedDictionary<ICommand, string> IApplication.Commands => throw new NotImplementedException();
 
         void IApplication.Run() =>
             YtdlpInterface.YtDlpExecuter.Execute(Url.Ask(), ArgumentMaker.MakeArguments());

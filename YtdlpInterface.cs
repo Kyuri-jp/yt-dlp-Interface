@@ -1,4 +1,4 @@
-﻿using yt_dlp_Interface.Applications;
+using yt_dlp_Interface.Applications;
 using yt_dlp_Interface.Applications.ArgumentSelector;
 using yt_dlp_Interface.Applications.Interfaces;
 using yt_dlp_Interface.Applications.Preset;
@@ -43,11 +43,12 @@ internal class YtdlpInterface
         if (foundDirectories.Count <= 0)
         {
             Console.ColoredWriteLine("yt-dlp.exe was not found.\n" +
-                "Please try again atfer download yt-dlp", ConsoleColor.Red);
-            Console.WriteLine("Please enter any key...");
+                "Please try again after downloading yt-dlp", ConsoleColor.Red);
+            Console.WriteLine("Please enter any keys...");
             System.Console.ReadKey();
             Environment.Exit(0);
         }
+
         executer = new Executer(foundDirectories.First());
 
         while (true)
