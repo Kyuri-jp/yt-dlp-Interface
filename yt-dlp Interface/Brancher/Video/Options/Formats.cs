@@ -1,5 +1,4 @@
 ﻿using yt_dlp_Interface.Brancher.Interfaces;
-using yt_dlp_Interface.Libs.Object;
 using Console = yt_dlp_Interface.Libs.Systems.Console;
 
 namespace yt_dlp_Interface.Brancher.Video.Options
@@ -20,9 +19,9 @@ namespace yt_dlp_Interface.Brancher.Video.Options
         string IOptionSelector.Ask()
         {
             List<string> values = [];
-            var formatNames = Enum<Yt_dlp.Options.Video.Formats>.GetNames();
-            var videoQualityNames = Enum<Yt_dlp.Options.VideoQuality>.GetNames();
-            var audioQualityNames = Enum<Yt_dlp.Options.AudioQuality>.GetNames();
+            var formatNames = Enum.GetNames<Yt_dlp.Options.Video.Formats>();
+            var videoQualityNames = Enum.GetNames<Yt_dlp.Options.Quality>();
+            var audioQualityNames = Enum.GetNames<Yt_dlp.Options.AudioQuality>();
 
             string selectedFormat = OptionSelector($"Select any formats. ({string.Join(',', formatNames)})", formatNames);
             values.Add(selectedFormat.Replace("three", "3"));

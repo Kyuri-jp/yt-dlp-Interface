@@ -1,5 +1,4 @@
 ﻿using yt_dlp_Interface.Brancher.Interfaces;
-using yt_dlp_Interface.Libs.Object;
 using Console = yt_dlp_Interface.Libs.Systems.Console;
 
 namespace yt_dlp_Interface.Brancher.Audio.Options
@@ -8,7 +7,7 @@ namespace yt_dlp_Interface.Brancher.Audio.Options
     {
         string IOptionSelector.Ask()
         {
-            var names = Enum<Yt_dlp.Options.Audio.Formats>.GetNames();
+            var names = Enum.GetNames<Yt_dlp.Options.Audio.Formats>();
             while (true)
             {
                 string selectedFormat = Console.Ask($"Select any formats. ({string.Join(',', names)})");
