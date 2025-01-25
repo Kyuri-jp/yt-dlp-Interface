@@ -4,7 +4,7 @@ using Console = yt_dlp_Interface.Libs.Systems.Console;
 
 namespace yt_dlp_Interface.Commands.ArgumentSelector.Video
 {
-    internal class Quality : IArgumentMaker<VideoOptions>
+    internal class Quality : IArgumentMaker<VideoOptions>, ISelector
     {
         Dictionary<VideoOptions, string> IArgumentMaker<VideoOptions>.Generate() => new()
         {
@@ -13,5 +13,7 @@ namespace yt_dlp_Interface.Commands.ArgumentSelector.Video
                 Console.Select("Select quality",[..Enum.GetNames<Yt_dlp.Options.Quality>()],selectType:Console.SelectType.Loose)
             }
         };
+
+        ISelector.Mode ISelector.GetMode() => ISelector.Mode.Video;
     }
 }
