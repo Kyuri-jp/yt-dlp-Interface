@@ -46,8 +46,9 @@
                         ColoredWriteLine(item, ConsoleColor.Cyan);
                 string input = Ask(message).Trim();
                 list = selectType == SelectType.Loose ? list.Select(x => x.ToLower()).ToList() : list;
-                if (list.Contains(selectType == SelectType.Loose ? input.ToLower() : input))
-                    return input;
+                var result = list.Where(x => x == (selectType == SelectType.Loose ? input.ToLower() : input));
+                if (result.Any())
+                    return result.First();
                 ColoredWriteLine("Please enter correct value.\n", ConsoleColor.Yellow);
             }
         }
