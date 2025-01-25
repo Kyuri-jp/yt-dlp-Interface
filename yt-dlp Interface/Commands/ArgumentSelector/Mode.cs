@@ -9,7 +9,12 @@ namespace yt_dlp_Interface.Commands.ArgumentSelector
     {
         SortedDictionary<string, string> ICommand.Arguments => throw new NotImplementedException();
 
-        void ICommand.Execute(Dictionary<string, List<string>> arguments) =>
-            Argumentselector.SetMode(Console.Select("Select argument mode.", Argumentselector.Modes).ToUpperFirstLetter());
+        void ICommand.Execute(Dictionary<string, List<string>> arguments)
+        {
+            ArgumentData.Clear();
+            Argumentselector.SetMode(Console.Select("Select argument mode.",
+                                                    Argumentselector.Modes,
+                                                    selectType: Console.SelectType.Loose).ToUpperFirstLetter());
+        }
     }
 }
