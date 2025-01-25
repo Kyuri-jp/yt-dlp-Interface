@@ -10,7 +10,7 @@
 
   <ItemGroup>
     <Folder Include="Brancher\Abstract\" />
-    <Folder Include="Commands\ArgumentSelector\Video\" />
+    <Folder Include="Commands\ArgumentSelector\Abstracts\" />
     <Folder Include="Commands\ArgumentSelector\General\" />
   </ItemGroup>
 
