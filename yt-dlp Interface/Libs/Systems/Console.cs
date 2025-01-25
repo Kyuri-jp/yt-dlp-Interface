@@ -30,7 +30,13 @@
             }
         }
 
-        internal static string Select(string message, List<string> list, bool showList = true)
+        internal enum SelectType
+        {
+            Strict,
+            Loose
+        }
+
+        internal static string Select(string message, List<string> list, bool showList = true, SelectType selectType = SelectType.Strict)
         {
             ArgumentNullException.ThrowIfNull(message);
             while (true)
@@ -39,7 +45,8 @@
                     foreach (var item in list)
                         ColoredWriteLine(item, ConsoleColor.Cyan);
                 string input = Ask(message).Trim();
-                if (list.Contains(input))
+                list = selectType == SelectType.Loose ? list.Select(x => x.ToLower()).ToList() : list;
+                if (list.Contains(selectType == SelectType.Loose ? input.ToLower() : input))
                     return input;
                 ColoredWriteLine("Please enter correct value.\n", ConsoleColor.Yellow);
             }
