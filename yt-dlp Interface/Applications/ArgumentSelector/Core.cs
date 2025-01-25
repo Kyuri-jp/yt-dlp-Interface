@@ -8,6 +8,5 @@ namespace yt_dlp_Interface.Applications.ArgumentSelector
 {
     internal static class Core
     {
-        private static
     }
 }

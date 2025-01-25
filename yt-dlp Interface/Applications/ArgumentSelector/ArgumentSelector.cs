@@ -11,9 +11,26 @@ namespace yt_dlp_Interface.Applications.ArgumentSelector
 {
     internal class Argumentselector : IApplication
     {
+        private enum Mode
+        {
+            Video,
+            Audio,
+        }
+
+        internal static List<string> Modes => [.. Enum.GetNames<Mode>()];
+
+        private static Mode ArgumentMode = Mode.Video;
+
+        internal static void SetMode(string modeName)
+        {
+            if (Enum.GetNames<Mode>().Contains(modeName))
+                ArgumentMode = Enum.Parse<Mode>(modeName);
+        }
+
         public Dictionary<ICommand, string> Commands => new()
         {
             {new Enter(), "Enter the argument."},
+            {new Commands.ArgumentSelector.Mode(),"Set argument mode." }
         };
 
         void IApplication.Run()
