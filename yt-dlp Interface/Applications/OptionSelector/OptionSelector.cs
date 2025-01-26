@@ -31,8 +31,9 @@ namespace yt_dlp_Interface.Applications.OptionSelector
         public Dictionary<ICommand, string> Commands => new()
         {
             {new Enter(), "Enter the argument."},
-            {new Commands.OptionSelector.Mode(),"Set argument mode." },
-            {new Make(),"Make argument" }
+            {new Mode(),"Set argument mode." },
+            {new Make(),"Make argument" },
+            {new Get(),"Get argument" },
         };
 
         void IApplication.Run()
