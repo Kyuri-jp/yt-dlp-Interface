@@ -1,4 +1,5 @@
-﻿using Console = yt_dlp_Interface.Libs.Systems.Console;
+﻿using yt_dlp_Interface.Applications.OptionSelector;
+using Console = yt_dlp_Interface.Libs.Systems.Console;
 
 namespace yt_dlp_Interface.Brancher
 {

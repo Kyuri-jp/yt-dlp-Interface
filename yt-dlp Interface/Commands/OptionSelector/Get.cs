@@ -10,7 +10,7 @@ namespace yt_dlp_Interface.Commands.OptionSelector
 
         void ICommand.Execute(Dictionary<string, List<string>> arguments)
         {
-            OptionData.GetArguments().ToList()
+            OptionData.GetOptions().ToList()
                                      .ForEach(x => Console.ColoredWriteLine($"{x.Key} : {string.Join(',', x.Value)}", ConsoleColor.Cyan));
         }
     }

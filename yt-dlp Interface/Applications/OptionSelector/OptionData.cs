@@ -5,19 +5,19 @@ namespace yt_dlp_Interface.Applications.OptionSelector
 {
     internal static class OptionData
     {
-        private static readonly Dictionary<string, string> Arguments = [];
+        private static readonly Dictionary<string, string> Options = [];
 
         internal static void SetDefault(OptionModes optionMode)
         {
-            Arguments.Clear();
+            Options.Clear();
             switch (optionMode)
             {
                 case OptionModes.Video:
-                    Options.VideoOptionsDefault.ToList().ForEach(x => Add(x.Key.ToString(), x.Value));
+                    Commands.OptionSelector.Options.VideoOptionsDefault.ToList().ForEach(x => Add(x.Key.ToString(), x.Value));
                     break;
 
                 case OptionModes.Audio:
-                    Options.AudioOptionsDefault.ToList().ForEach(x => Add(x.Key.ToString(), x.Value));
+                    Commands.OptionSelector.Options.AudioOptionsDefault.ToList().ForEach(x => Add(x.Key.ToString(), x.Value));
                     break;
 
                 default:
@@ -27,14 +27,14 @@ namespace yt_dlp_Interface.Applications.OptionSelector
 
         internal static void Add(string key, string value)
         {
-            if (!Arguments.TryAdd(key, value))
-                Arguments[key] = value;
+            if (!Options.TryAdd(key, value))
+                Options[key] = value;
         }
 
-        internal static void Remove(string key) => Arguments.Remove(key);
+        internal static void Remove(string key) => Options.Remove(key);
 
-        internal static Dictionary<string, string> GetArguments() => Arguments;
+        internal static Dictionary<string, string> GetOptions() => Options;
 
-        internal static void Clear() => Arguments.Clear();
+        internal static void Clear() => Options.Clear();
     }
 }

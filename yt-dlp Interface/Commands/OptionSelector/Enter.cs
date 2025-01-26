@@ -11,10 +11,10 @@ namespace yt_dlp_Interface.Commands.OptionSelector
 
         void ICommand.Execute(Dictionary<string, List<string>> arguments)
         {
-            OptionData.GetArguments().ToList().ForEach(x => Console.ColoredWriteLine($"{x.Key} : {x.Value}", ConsoleColor.Cyan));
+            OptionData.GetOptions().ToList().ForEach(x => Console.ColoredWriteLine($"{x.Key} : {x.Value}", ConsoleColor.Cyan));
             if (!Console.AskYesOrNo("Do you confirm this options?"))
                 return;
-            var parsedOption = Options.Parse(Applications.OptionSelector.OptionSelector.GetMode(), OptionData.GetArguments());
+            var parsedOption = Options.Parse(Applications.OptionSelector.OptionSelector.GetMode(), OptionData.GetOptions());
             Console.WriteLine("Parsed Options:");
             parsedOption.ToList().ForEach(x => Console.ColoredWriteLine($"{x.Key} : {x.Value}", ConsoleColor.Green));
             YtdlpInterface.YtDlpExecuter.Execute(Url.Ask(), [.. parsedOption.Values]);
