@@ -1,8 +1,8 @@
-﻿using yt_dlp_Interface.Applications.OptionSelector;
-using yt_dlp_Interface.Applications.OptionSelector;
+﻿using static yt_dlp_Interface.Applications.OptionSelector.OptionSelector;
 using yt_dlp_Interface.Commands.Interfaces;
 using yt_dlp_Interface.Libs.Utils;
 using Console = yt_dlp_Interface.Libs.Systems.Console;
+using yt_dlp_Interface.Applications.OptionSelector;
 
 namespace yt_dlp_Interface.Commands.OptionSelector
 {
@@ -13,8 +13,8 @@ namespace yt_dlp_Interface.Commands.OptionSelector
         void ICommand.Execute(Dictionary<string, List<string>> arguments)
         {
             OptionData.Clear();
-            OptionSelector.SetMode(Console.Select("Select argument mode.",
-                                                    OptionSelector.Modes,
+            SetMode(Console.Select("Select argument mode.",
+                                                    Modes,
                                                     selectType: Console.SelectType.Loose).ToUpperFirstLetter());
         }
     }

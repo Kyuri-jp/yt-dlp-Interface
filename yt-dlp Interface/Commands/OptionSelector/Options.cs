@@ -30,7 +30,7 @@
         {
             { AudioOptions.Format, "--audio-format {0}" },
             { AudioOptions.Thumbnail, "--embed-thumbnail" },
-            { AudioOptions.Metadata, "--embed-metadata" }c
+            { AudioOptions.Metadata, "--embed-metadata" }
         };
 
         internal static readonly Dictionary<VideoOptions, string> videoOptionsTable = new()
@@ -41,8 +41,8 @@
             { VideoOptions.Quality, "-f {0}video[{2}]+{1}audio[{3}]" },
         };
 
-        internal static List<string> Parse<TOptionType>(Dictionary<string, List<string>> data) where TOptionType : Enum
+        /*internal static List<string> Parse<TOptionType>(Dictionary<string, List<string>> data) where TOptionType : Enum
         {
-        }
+        }*/
     }
 }
