@@ -1,7 +1,7 @@
-﻿using yt_dlp_Interface.Commands.OptionSelector.Interface;
-using yt_dlp_Interface.Commands.Interfaces;
-using static yt_dlp_Interface.Commands.OptionSelector.Options;
+﻿using yt_dlp_Interface.Commands.Interfaces;
+using yt_dlp_Interface.Commands.OptionSelector.Interface;
 using static yt_dlp_Interface.Applications.OptionSelector.OptionSelector;
+using static yt_dlp_Interface.Commands.OptionSelector.Options;
 using Console = yt_dlp_Interface.Libs.Systems.Console;
 
 namespace yt_dlp_Interface.Commands.OptionSelector
@@ -26,7 +26,8 @@ namespace yt_dlp_Interface.Commands.OptionSelector
 
         void ICommand.Execute(Dictionary<string, List<string>> arguments)
         {
-            var enableOptions = OptionPairs.Where(x => x.Value.GetOptionMode() == GetMode());
+            var enableOptions = OptionPairs.Where(x => x.Value.GetOptionMode() == GetMode()).ToDictionary(x => x.Key,
+                                                                                                          x => x.Value);
             while (true)
             {
                 string command = Console.AskLikeCui("OptionSelector/Make");
@@ -37,6 +38,18 @@ namespace yt_dlp_Interface.Commands.OptionSelector
                     enableOptions.ToList().ForEach(x => Console.ColoredWriteLine(x.Key.ToString(), ConsoleColor.Cyan));
                     continue;
                 }
+                if (GetMode() == OptionModes.Video
+                    ? Libs.Object.Enum.Contains<VideoOptions>(command, true)
+                    : Libs.Object.Enum.Contains<AudioOptions>(command, true))
+                {
+                    var option = enableOptions.First(x => x.Key.ToString().Equals(command, StringComparison.CurrentCultureIgnoreCase));
+                    var result = option.Value.Generate();
+                    foreach (var (key, value) in result)
+                    {
+                        Console.ColoredWriteLine($"{key} : {value}", ConsoleColor.Cyan);
+                    }
+                }
+                Console.ColoredWriteLine("Invalid command", ConsoleColor.Red);
             }
         }
     }
