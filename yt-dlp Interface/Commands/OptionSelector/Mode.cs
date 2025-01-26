@@ -1,9 +1,10 @@
-﻿using yt_dlp_Interface.Applications.ArgumentSelector;
+﻿using yt_dlp_Interface.Applications.OptionSelector;
+using yt_dlp_Interface.Applications.OptionSelector;
 using yt_dlp_Interface.Commands.Interfaces;
 using yt_dlp_Interface.Libs.Utils;
 using Console = yt_dlp_Interface.Libs.Systems.Console;
 
-namespace yt_dlp_Interface.Commands.ArgumentSelector
+namespace yt_dlp_Interface.Commands.OptionSelector
 {
     internal class Mode : ICommand
     {
@@ -11,9 +12,9 @@ namespace yt_dlp_Interface.Commands.ArgumentSelector
 
         void ICommand.Execute(Dictionary<string, List<string>> arguments)
         {
-            ArgumentData.Clear();
-            Argumentselector.SetMode(Console.Select("Select argument mode.",
-                                                    Argumentselector.Modes,
+            OptionData.Clear();
+            OptionSelector.SetMode(Console.Select("Select argument mode.",
+                                                    OptionSelector.Modes,
                                                     selectType: Console.SelectType.Loose).ToUpperFirstLetter());
         }
     }

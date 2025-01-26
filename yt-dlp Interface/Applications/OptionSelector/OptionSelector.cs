@@ -1,43 +1,45 @@
 ﻿using yt_dlp_Interface.Applications.Interfaces;
-using yt_dlp_Interface.Brancher;
 using yt_dlp_Interface.Brancher.General;
 using yt_dlp_Interface.Commands;
-using yt_dlp_Interface.Commands.ArgumentSelector;
 using yt_dlp_Interface.Commands.Interfaces;
+using yt_dlp_Interface.Commands.OptionSelector;
 using yt_dlp_Interface.Libs.Systems;
 using Console = yt_dlp_Interface.Libs.Systems.Console;
 
-namespace yt_dlp_Interface.Applications.ArgumentSelector
+namespace yt_dlp_Interface.Applications.OptionSelector
 {
-    internal class Argumentselector : IApplication
+    internal class OptionSelector : IApplication
     {
-        private enum Mode
+        internal enum OptionModes
         {
             Video,
             Audio,
         }
 
-        internal static List<string> Modes => [.. Enum.GetNames<Mode>()];
+        internal static List<string> Modes => [.. Enum.GetNames<OptionModes>()];
 
-        private static Mode ArgumentMode = Mode.Video;
+        private static OptionModes ArgumentMode = OptionModes.Video;
 
         internal static void SetMode(string modeName)
         {
-            if (Enum.GetNames<Mode>().Contains(modeName))
-                ArgumentMode = Enum.Parse<Mode>(modeName);
+            if (Enum.GetNames<OptionModes>().Contains(modeName))
+                ArgumentMode = Enum.Parse<OptionModes>(modeName);
         }
+
+        internal static OptionModes GetMode() => ArgumentMode;
 
         public Dictionary<ICommand, string> Commands => new()
         {
             {new Enter(), "Enter the argument."},
-            {new Commands.ArgumentSelector.Mode(),"Set argument mode." }
+            {new Commands.OptionSelector.Mode(),"Set argument mode." },
+            {new Make(),"Make argument" }
         };
 
         void IApplication.Run()
         {
             while (true)
             {
-                string command = Console.AskLikeCui("ArgumentSelector");
+                string command = Console.AskLikeCui("OptionSelector");
                 if (command == "exit")
                     break;
                 if (command.Equals("help", StringComparison.CurrentCultureIgnoreCase))
@@ -47,7 +49,7 @@ namespace yt_dlp_Interface.Applications.ArgumentSelector
                 }
                 CommandRunner.RunCommand(command, Commands.ToDictionary());
             }
-            YtdlpInterface.YtDlpExecuter.Execute(Url.Ask(), ArgumentMaker.MakeArguments());
+            YtdlpInterface.YtDlpExecuter.Execute(Url.Ask(), Brancher.ArgumentMaker.MakeArguments());
         }
     }
 }

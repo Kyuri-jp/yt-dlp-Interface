@@ -21,7 +21,7 @@ namespace yt_dlp_Interface.Brancher.Video.Options
             List<string> values = [];
             var formatNames = Enum.GetNames<Yt_dlp.Options.Video.Formats>();
             var videoQualityNames = Enum.GetNames<Yt_dlp.Options.Quality>();
-            var audioQualityNames = Enum.GetNames<Yt_dlp.Options.AudioQuality>();
+            var audioQualityNames = Enum.GetNames<Yt_dlp.Options.Quality>();
 
             string selectedFormat = OptionSelector($"Select any formats. ({string.Join(',', formatNames)})", formatNames);
             values.Add(selectedFormat.Replace("three", "3"));

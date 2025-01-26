@@ -1,5 +1,5 @@
 ﻿using yt_dlp_Interface.Applications;
-using yt_dlp_Interface.Applications.ArgumentSelector;
+using yt_dlp_Interface.Applications.OptionSelector;
 using yt_dlp_Interface.Applications.Interfaces;
 using yt_dlp_Interface.Applications.Preset;
 using yt_dlp_Interface.Yt_dlp;
@@ -15,7 +15,7 @@ internal class YtdlpInterface
 
     private static readonly Dictionary<IApplication, string> Applications = new()
     {
-        {new Argumentselector(), "Argument Selector"},
+        {new OptionSelector(), "Option Selector"},
         {new Preset(), "Preset Selector"},
         {new Help(), "Show Applications Help"},
     };
