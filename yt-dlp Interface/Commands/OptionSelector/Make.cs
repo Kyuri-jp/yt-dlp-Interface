@@ -1,4 +1,5 @@
-﻿using yt_dlp_Interface.Commands.Interfaces;
+﻿using yt_dlp_Interface.Applications.OptionSelector;
+using yt_dlp_Interface.Commands.Interfaces;
 using yt_dlp_Interface.Commands.OptionSelector.Interface;
 using static yt_dlp_Interface.Applications.OptionSelector.OptionSelector;
 using static yt_dlp_Interface.Commands.OptionSelector.Options;
@@ -44,10 +45,9 @@ namespace yt_dlp_Interface.Commands.OptionSelector
                 {
                     var option = enableOptions.First(x => x.Key.ToString().Equals(command, StringComparison.CurrentCultureIgnoreCase));
                     var result = option.Value.Generate();
-                    foreach (var (key, value) in result)
-                    {
-                        Console.ColoredWriteLine($"{key} : {value}", ConsoleColor.Cyan);
-                    }
+                    result.ToList().ForEach(x => OptionData.Add(x.Key, x.Value));
+                    result.ToList().ForEach(x => Console.ColoredWriteLine($"{x.Key} : {x.Value}", ConsoleColor.Cyan));
+                    continue;
                 }
                 Console.ColoredWriteLine("Invalid command", ConsoleColor.Red);
             }
