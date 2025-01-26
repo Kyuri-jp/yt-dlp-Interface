@@ -50,7 +50,6 @@ namespace yt_dlp_Interface.Applications.OptionSelector
                 }
                 CommandRunner.RunCommand(command, Commands.ToDictionary());
             }
-            YtdlpInterface.YtDlpExecuter.Execute(Url.Ask(), Brancher.ArgumentMaker.MakeArguments());
         }
     }
 }

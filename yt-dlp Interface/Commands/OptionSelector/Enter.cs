@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using yt_dlp_Interface.Commands.OptionSelector.Interface;
+﻿using yt_dlp_Interface.Applications.OptionSelector;
+using yt_dlp_Interface.Brancher.General;
 using yt_dlp_Interface.Commands.Interfaces;
+using Console = yt_dlp_Interface.Libs.Systems.Console;
 
 namespace yt_dlp_Interface.Commands.OptionSelector
 {
@@ -14,7 +11,13 @@ namespace yt_dlp_Interface.Commands.OptionSelector
 
         void ICommand.Execute(Dictionary<string, List<string>> arguments)
         {
-            throw new NotImplementedException();
+            OptionData.GetArguments().ToList().ForEach(x => Console.ColoredWriteLine($"{x.Key} : {x.Value}", ConsoleColor.Cyan));
+            if (!Console.AskYesOrNo("Do you confirm this options?"))
+                return;
+            var parsedOption = Options.Parse(Applications.OptionSelector.OptionSelector.GetMode(), OptionData.GetArguments());
+            Console.WriteLine("Parsed Options:");
+            parsedOption.ToList().ForEach(x => Console.ColoredWriteLine($"{x.Key} : {x.Value}", ConsoleColor.Cyan));
+            YtdlpInterface.YtDlpExecuter.Execute(Url.Ask(), [.. parsedOption.Values]);
         }
     }
 }
