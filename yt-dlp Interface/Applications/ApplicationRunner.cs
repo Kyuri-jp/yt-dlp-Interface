@@ -11,7 +11,7 @@ namespace yt_dlp_Interface.Applications
 
         internal static void RunApplication(string command, Dictionary<IApplication, string> applications)
         {
-            var applicationNames = applications.ToList().Select(x => x.GetType().Name.ToLower());
+            var applicationNames = applications.ToList().Select(x => x.Key.GetType().Name.ToLower());
 
             if (applicationNames.Contains(command.ToLower()))
             {
