@@ -7,9 +7,9 @@ namespace yt_dlp_Interface.Commands.OptionSelector.Video
 {
     internal class Codec : IOptionSelector, ISelector
     {
-        Dictionary<GeneratedOptions, string> IOptionSelector.Generate() => new() {
+        Dictionary<string, string> IOptionSelector.Generate() => new() {
             {
-                GeneratedOptions.Codec,
+                VideoOptions.Codec.ToString(),
                 Console.Select("Select quality",[..Enum.GetNames<Yt_dlp.Options.Video.Codecs>()],selectType:Console.SelectType.Loose)
             }
         };

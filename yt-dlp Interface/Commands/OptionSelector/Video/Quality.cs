@@ -7,10 +7,10 @@ namespace yt_dlp_Interface.Commands.OptionSelector.Video
 {
     internal class Quality : IOptionSelector
     {
-        Dictionary<GeneratedOptions, string> IOptionSelector.Generate() => new()
+        Dictionary<string, string> IOptionSelector.Generate() => new()
         {
             {
-                GeneratedOptions.Quality,
+                GeneratedOptions.Quality.ToString(),
                 Console.Select("Select quality",
                                                 [..Enum.GetNames<Yt_dlp.Options.Quality>()],
                                                 selectType:Console.SelectType.Loose)

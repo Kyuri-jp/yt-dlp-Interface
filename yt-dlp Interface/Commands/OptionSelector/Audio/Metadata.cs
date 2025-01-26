@@ -6,7 +6,7 @@ namespace yt_dlp_Interface.Commands.OptionSelector.Audio
 {
     internal class Metadata : IOptionSelector
     {
-        Dictionary<GeneratedOptions, string> IOptionSelector.Generate() => throw new NotImplementedException();
+        Dictionary<string, string> IOptionSelector.Generate() => throw new NotImplementedException();
 
         OptionModes ISelector.GetOptionMode() => OptionModes.Audio;
     }

@@ -7,10 +7,10 @@ namespace yt_dlp_Interface.Commands.OptionSelector.Video
 {
     internal class VideoFormat() : IOptionSelector
     {
-        Dictionary<GeneratedOptions, string> IOptionSelector.Generate() => new()
+        Dictionary<string, string> IOptionSelector.Generate() => new()
         {
             {
-                GeneratedOptions.Format,
+                VideoOptions.VideoFormat.ToString(),
                 Console.Select("Select format",
                                                 [..Enum.GetNames<Yt_dlp.Options.Video.Formats>()],
                                                 selectType:Console.SelectType.Loose)

@@ -2,6 +2,6 @@
 {
     internal interface IOptionSelector : ISelector
     {
-        internal Dictionary<Options.GeneratedOptions, string> Generate();
+        internal Dictionary<string, string> Generate();
     }
 }
