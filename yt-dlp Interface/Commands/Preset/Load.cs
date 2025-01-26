@@ -6,7 +6,7 @@ namespace yt_dlp_Interface.Commands.Preset
 {
     internal class Load(Libs.Client.Preset presetInterface) : ICommand
     {
-        Dictionary<string, string> ICommand.Arguments => throw new NotImplementedException();
+        SortedDictionary<string, string> ICommand.Arguments => throw new NotImplementedException();
 
         void ICommand.Execute(Dictionary<string, List<string>> arguments)
         {

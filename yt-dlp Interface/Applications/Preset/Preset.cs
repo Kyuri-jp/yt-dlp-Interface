@@ -16,6 +16,7 @@ namespace yt_dlp_Interface.Applications.Preset
         {
             { new Commands.Preset.Create(presetInterface), "Create new preset" },
             { new Commands.Preset.Load(presetInterface), "Load preset" },
+            { new Commands.Preset.Get(presetInterface), "Get preset" },
         };
 
         void IApplication.Run()
@@ -30,7 +31,7 @@ namespace yt_dlp_Interface.Applications.Preset
                     ShowHelp<ICommand>.ShowHelps(Commands);
                     continue;
                 }
-                CommandRunner.RunCommand(command, Commands);
+                CommandRunner.RunCommand(command, Commands.ToDictionary());
             }
         }
     }

@@ -1,4 +1,4 @@
-﻿using yt_dlp_Interface.Applications;
+using yt_dlp_Interface.Applications;
 using yt_dlp_Interface.Applications.ArgumentSelector;
 using yt_dlp_Interface.Applications.Interfaces;
 using yt_dlp_Interface.Applications.Preset;
@@ -9,18 +9,18 @@ namespace yt_dlp_Interface;
 
 internal class YtdlpInterface
 {
-    private static Executer? executer = null;
+    private static Executer? executer;
 
     internal static Executer YtDlpExecuter => executer == null ? throw new ArgumentNullException() : executer!;
 
-    private static readonly Dictionary<IApplication, string> Applications = new()
+    private static readonly SortedDictionary<IApplication, string> Applications = new()
     {
         {new Argumentselector(), "Argument Selector"},
         {new Preset(), "Preset Selector"},
         {new Help(), "Show Applications Help"},
     };
 
-    internal static Dictionary<IApplication, string> ApplicationDatas => Applications;
+    internal static SortedDictionary<IApplication, string> ApplicationDatas => Applications;
 
     private static void Main()
     {
@@ -43,16 +43,17 @@ internal class YtdlpInterface
         if (foundDirectories.Count <= 0)
         {
             Console.ColoredWriteLine("yt-dlp.exe was not found.\n" +
-                "Please try again atfer download yt-dlp", ConsoleColor.Red);
-            Console.WriteLine("Please enter any key...");
+                "Please try again after downloading yt-dlp", ConsoleColor.Red);
+            Console.WriteLine("Please enter any keys...");
             System.Console.ReadKey();
             Environment.Exit(0);
         }
+
         executer = new Executer(foundDirectories.First());
 
         while (true)
         {
-            ApplicationRunner.RunApplication(Console.AskLikeCui(), Applications);
+            ApplicationRunner.RunApplication(Console.AskLikeCui(), Applications.ToDictionary());
         }
     }
 }
