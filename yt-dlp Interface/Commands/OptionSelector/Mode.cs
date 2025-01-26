@@ -12,7 +12,6 @@ namespace yt_dlp_Interface.Commands.OptionSelector
 
         void ICommand.Execute(Dictionary<string, List<string>> arguments)
         {
-            OptionData.Clear();
             SetMode(Console.Select("Select argument mode.",
                                                     Modes,
                                                     selectType: Console.SelectType.Loose).ToUpperFirstLetter());

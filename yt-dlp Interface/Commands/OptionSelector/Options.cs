@@ -56,6 +56,9 @@ namespace yt_dlp_Interface.Commands.OptionSelector
             {VideoOptions.Quality, Yt_dlp.Options.Quality.best.ToString() }
         };
 
+        internal static Dictionary<AudioOptions, string> AudioOptionsDefault => audioOptionsDefault;
+        internal static Dictionary<VideoOptions, string> VideoOptionsDefault => videoOptionsDefault;
+
         internal static Dictionary<GeneratedOptions, string> Parse(OptionModes mode, Dictionary<string, string> data)
         {
             if (mode == OptionModes.Video)

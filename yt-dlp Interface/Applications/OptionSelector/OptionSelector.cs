@@ -24,6 +24,7 @@ namespace yt_dlp_Interface.Applications.OptionSelector
         {
             if (Enum.GetNames<OptionModes>().Contains(modeName))
                 ArgumentMode = Enum.Parse<OptionModes>(modeName);
+            OptionData.SetDefault(GetMode());
         }
 
         internal static OptionModes GetMode() => ArgumentMode;
@@ -38,6 +39,7 @@ namespace yt_dlp_Interface.Applications.OptionSelector
 
         void IApplication.Run()
         {
+            OptionData.SetDefault(GetMode());
             while (true)
             {
                 string command = Console.AskLikeCui("OptionSelector");
