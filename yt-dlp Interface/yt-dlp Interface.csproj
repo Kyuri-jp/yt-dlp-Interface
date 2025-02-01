@@ -9,7 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Brancher\Abstract\" />
+    <Folder Include="Commands\OptionSelector\Abstracts\" />
+    <Folder Include="Commands\OptionSelector\General\" />
   </ItemGroup>
 
 </Project>
