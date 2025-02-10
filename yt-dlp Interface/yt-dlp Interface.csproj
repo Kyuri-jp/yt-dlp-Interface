@@ -1,16 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>net8.0</TargetFramework>
-    <RootNamespace>yt_dlp_Interface</RootNamespace>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net8.0</TargetFramework>
+		<RootNamespace>yt_dlp_Interface</RootNamespace>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<PublishSingleFile>true</PublishSingleFile>
+		<SelfContained>true</SelfContained>
+		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
+		<PublishReadyToRun>true</PublishReadyToRun>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Commands\OptionSelector\Abstracts\" />
-    <Folder Include="Commands\OptionSelector\General\" />
-  </ItemGroup>
+	<ItemGroup>
+		<Folder Include="Commands\OptionSelector\Abstracts\" />
+		<Folder Include="Commands\OptionSelector\General\" />
+	</ItemGroup>
 
 </Project>
