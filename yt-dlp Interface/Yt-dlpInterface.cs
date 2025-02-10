@@ -4,6 +4,7 @@ using yt_dlp_Interface.Applications.Interfaces;
 using yt_dlp_Interface.Applications.Preset;
 using yt_dlp_Interface.Yt_dlp;
 using Console = yt_dlp_Interface.Libs.Systems.Console;
+using yt_dlp_Interface.Applications.Client;
 
 namespace yt_dlp_Interface;
 
@@ -18,6 +19,7 @@ internal class YtdlpInterface
         {new OptionSelector(), "Option Selector"},
         {new Preset(), "Preset Selector"},
         {new Help(), "Show Applications Help"},
+        {new Client(), "Control yt-dlp"},
     };
 
     internal static Dictionary<IApplication, string> ApplicationDatas => Applications;

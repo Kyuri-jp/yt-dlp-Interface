@@ -15,7 +15,7 @@ namespace yt_dlp_Interface.Commands.Preset
                 Console.ColoredWriteLine("Setting File is not exists.\nPlase make any presets.\nHow to : *Do you use any presets?*->n *Do you make new preset or modify any preset?*->y", ConsoleColor.Red);
                 return;
             }
-            YtdlpInterface.YtDlpExecuter.Execute(Url.Ask(), presetInterface.Setting[Console.Select("Select any preset.", presetInterface.Setting
+            YtdlpInterface.YtDlpExecuter.Download(Url.Ask(), presetInterface.Setting[Console.Select("Select any preset.", presetInterface.Setting
                                                                                     .ToDictionary(pair => pair.Key, pair => string.Join(" ", pair.Value)))]);
         }
     }
