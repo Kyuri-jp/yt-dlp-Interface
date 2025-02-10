@@ -11,7 +11,7 @@ namespace yt_dlp_Interface.Commands.OptionSelector.Audio
         Dictionary<string, string> IOptionSelector.Generate() => new()
         {
             {
-                GeneratedOptions.Format.ToString(),
+                GeneratedOptions.Metadata.ToString(),
                 Console.AskYesOrNo("Will you embed metadata?").ToString()
             }
         };
