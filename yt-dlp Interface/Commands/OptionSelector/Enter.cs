@@ -17,7 +17,7 @@ namespace yt_dlp_Interface.Commands.OptionSelector
             var parsedOption = Options.Parse(Applications.OptionSelector.OptionSelector.GetMode(), OptionData.GetOptions());
             Console.WriteLine("Parsed Options:");
             parsedOption.ToList().ForEach(x => Console.ColoredWriteLine($"{x.Key} : {x.Value}", ConsoleColor.Green));
-            YtdlpInterface.YtDlpExecuter.Execute(Url.Ask(), [.. parsedOption.Values]);
+            YtdlpInterface.YtDlpExecuter.Download(Url.Ask(), [.. parsedOption.Values]);
         }
     }
 }
