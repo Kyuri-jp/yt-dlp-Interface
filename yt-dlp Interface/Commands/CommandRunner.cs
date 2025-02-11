@@ -15,7 +15,7 @@ namespace yt_dlp_Interface.Commands
 
             if (stringedCommandsData.ContainsKey(mainCommand))
             {
-                ICommand commandInstance = commandsData.ElementAt(stringedCommandsData.Keys.ToList().IndexOf(command.ToUpperFirstLetter())).Key;
+                ICommand commandInstance = commandsData.ElementAt(stringedCommandsData.Keys.ToList().IndexOf(parsedCommand.First().Key.ToUpperFirstLetter())).Key;
                 commandInstance?.Execute(parsedCommand.Skip(1).ToDictionary(pair => pair.Key, pair => pair.Value));
             }
             else

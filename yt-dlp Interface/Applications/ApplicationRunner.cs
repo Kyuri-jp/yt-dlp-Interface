@@ -15,7 +15,7 @@ namespace yt_dlp_Interface.Applications
                 if (instance != null)
                 {
                     Console.ColoredWriteLine($"Launched application of {instance.GetType().Name}", ConsoleColor.Cyan);
-                    instance.Run();
+                    instance.Run([string.Empty]);
                 }
             }
             else
