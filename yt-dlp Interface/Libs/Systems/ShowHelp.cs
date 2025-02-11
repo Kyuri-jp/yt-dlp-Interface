@@ -11,7 +11,7 @@ namespace yt_dlp_Interface.Libs.Systems
         {
             if (datas.Keys.Select(x => x.GetType().Name).Contains(command))
                 datas.ToList().Find(x => x.Key.GetType().Name == command).Key.Arguments.ToList()
-                     .ForEach(x => Console.ColoredWriteLine($"{x.Key} : {x.Value}", ConsoleColor.Green))
+                     .ForEach(x => Console.ColoredWriteLine($"{x.Key} : {x.Value}", ConsoleColor.Green));
             else
                 Console.ColoredWriteLine("Invalid command", ConsoleColor.Red);
         }
