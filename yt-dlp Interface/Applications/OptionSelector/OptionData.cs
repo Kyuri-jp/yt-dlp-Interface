@@ -1,5 +1,4 @@
-﻿using yt_dlp_Interface.Commands.OptionSelector;
-using static yt_dlp_Interface.Applications.OptionSelector.OptionSelector;
+﻿using static yt_dlp_Interface.Applications.OptionSelector.OptionSelector;
 
 namespace yt_dlp_Interface.Applications.OptionSelector
 {

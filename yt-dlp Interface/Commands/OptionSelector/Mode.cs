@@ -1,8 +1,7 @@
-﻿using static yt_dlp_Interface.Applications.OptionSelector.OptionSelector;
-using yt_dlp_Interface.Commands.Interfaces;
+﻿using yt_dlp_Interface.Commands.Interfaces;
 using yt_dlp_Interface.Libs.Utils;
+using static yt_dlp_Interface.Applications.OptionSelector.OptionSelector;
 using Console = yt_dlp_Interface.Libs.Systems.Console;
-using yt_dlp_Interface.Applications.OptionSelector;
 
 namespace yt_dlp_Interface.Commands.OptionSelector
 {

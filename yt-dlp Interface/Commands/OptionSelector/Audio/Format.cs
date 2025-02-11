@@ -1,7 +1,6 @@
 ﻿using yt_dlp_Interface.Commands.OptionSelector.Interface;
-using static yt_dlp_Interface.Commands.OptionSelector.Options;
 using static yt_dlp_Interface.Applications.OptionSelector.OptionSelector;
-using yt_dlp_Interface.Libs.Systems;
+using static yt_dlp_Interface.Commands.OptionSelector.Options;
 using Console = yt_dlp_Interface.Libs.Systems.Console;
 
 namespace yt_dlp_Interface.Commands.OptionSelector.Audio
