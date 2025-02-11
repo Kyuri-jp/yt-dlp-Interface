@@ -19,7 +19,7 @@ namespace yt_dlp_Interface.Applications.Preset
             { new Commands.Preset.Get(presetInterface), "Get preset" },
         };
 
-        void IApplication.Run()
+        void IApplication.Run(List<string> argument)
         {
             while (true)
             {

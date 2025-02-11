@@ -8,6 +8,6 @@ namespace yt_dlp_Interface.Applications
     {
         Dictionary<ICommand, string> IApplication.Commands => throw new NotImplementedException();
 
-        void IApplication.Run() => ShowHelp<IApplication>.ShowHelps(YtdlpInterface.ApplicationDatas);
+        void IApplication.Run(List<string> argument) => ShowHelp<IApplication>.ShowHelps(YtdlpInterface.ApplicationDatas);
     }
 }

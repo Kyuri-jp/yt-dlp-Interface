@@ -6,6 +6,6 @@ namespace yt_dlp_Interface.Applications.Interfaces
     {
         internal Dictionary<ICommand, string> Commands { get; }
 
-        internal void Run();
+        internal void Run(List<string> argument);
     }
 }

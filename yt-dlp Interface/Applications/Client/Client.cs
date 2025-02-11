@@ -14,7 +14,7 @@ namespace yt_dlp_Interface.Applications.Client
             { new Commands.Client.Version(), "Check yt-dlp version" }
         };
 
-        void IApplication.Run()
+        void IApplication.Run(List<string> argument)
         {
             while (true)
             {
