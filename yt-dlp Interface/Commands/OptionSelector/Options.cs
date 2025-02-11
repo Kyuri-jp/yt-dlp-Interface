@@ -77,7 +77,7 @@ namespace yt_dlp_Interface.Commands.OptionSelector
             {
                 return AudioFormatters.Where(x => data.ContainsKey($"{x.Key}"))
                                       .Select(x => new KeyValuePair<GeneratedOptions, string>(x.Value.GetGeneratedOption(), x.Value.Format(data)))
-                                      .Prepend(new KeyValuePair<GeneratedOptions, string>(GeneratedOptions.AudioOnly, "-f"))
+                                      .Prepend(new KeyValuePair<GeneratedOptions, string>(GeneratedOptions.AudioOnly, "-x"))
                                       .ToDictionary(x => x.Key, x => x.Value);
             }
             else if (mode == OptionModes.Video)
