@@ -9,7 +9,7 @@ namespace yt_dlp_Interface.Brancher.Preset
     {
         public string Ask()
         {
-            YtdlpInterface.ApplicationDatas.First(x => x.Key.GetType() == typeof(OptionSelector)).Key.Run();
+            YtdlpInterface.ApplicationDatas.First(x => x.Key.GetType() == typeof(OptionSelector)).Key.Run(["donotdownload"]);
             return $"{Console.Ask("Plase enter preset name.")},{string.Join(';', Options.Parse(OptionSelector.GetMode(), OptionData.GetOptions()).Values)}";
         }
 

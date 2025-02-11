@@ -7,7 +7,15 @@ namespace yt_dlp_Interface.Commands.OptionSelector
 {
     internal class Enter : ICommand
     {
-        SortedDictionary<string, string> ICommand.Arguments => throw new NotImplementedException();
+        private enum Arguments
+        {
+            DoNotDownload
+        }
+
+        SortedDictionary<string, string> ICommand.Arguments => new()
+        {
+            {$"{Arguments.DoNotDownload}","It will not download." }
+        };
 
         void ICommand.Execute(Dictionary<string, List<string>> arguments)
         {
@@ -17,7 +25,11 @@ namespace yt_dlp_Interface.Commands.OptionSelector
             var parsedOption = Options.Parse(Applications.OptionSelector.OptionSelector.GetMode(), OptionData.GetOptions());
             Console.WriteLine("Parsed Options:");
             parsedOption.ToList().ForEach(x => Console.ColoredWriteLine($"{x.Key} : {x.Value}", ConsoleColor.Green));
-            YtdlpInterface.YtDlpExecuter.Download(Url.Ask(), [.. parsedOption.Values]);
+            if (arguments.ContainsKey($"{Arguments.DoNotDownload.ToString().ToLower()}"))
+                Console.ColoredWriteLine("No download option is selected.", ConsoleColor.Yellow);
+            else
+                YtdlpInterface.YtDlpExecuter.Download(Url.Ask(), [.. parsedOption.Values]);
+            Applications.OptionSelector.OptionSelector.entered = true;
         }
     }
 }
