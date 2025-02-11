@@ -1,4 +1,5 @@
 ﻿using yt_dlp_Interface.Applications.Interfaces;
+using yt_dlp_Interface.Applications.OptionSelector;
 using yt_dlp_Interface.Commands;
 using yt_dlp_Interface.Commands.Interfaces;
 using yt_dlp_Interface.Libs.Systems;
@@ -23,15 +24,15 @@ namespace yt_dlp_Interface.Applications.Preset
         {
             while (true)
             {
-                string command = Console.AskLikeCui("Preset");
-                if (command == "exit")
+                var command = Argument.Parse(Console.AskLikeCui("OptionSelector"));
+                if (command.First().Key == "exit")
                     break;
-                if (command.Equals("help", StringComparison.CurrentCultureIgnoreCase))
+                if (command.First().Key.Equals("help", StringComparison.CurrentCultureIgnoreCase))
                 {
-                    ShowHelp<ICommand>.ShowHelps(Commands);
+                    ShowHelp<ICommand>.ShowHelps(Commands, command);
                     continue;
                 }
-                CommandRunner.RunCommand(command, Commands.ToDictionary());
+                CommandRunner.RunCommand(command.First().Key, Commands.ToDictionary());
             }
         }
     }

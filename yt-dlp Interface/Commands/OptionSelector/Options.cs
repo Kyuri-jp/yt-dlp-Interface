@@ -13,6 +13,7 @@ namespace yt_dlp_Interface.Commands.OptionSelector
             Format,
             Thumbnail,
             Metadata,
+            Custom,
         }
 
         internal enum VideoOptions
@@ -21,6 +22,7 @@ namespace yt_dlp_Interface.Commands.OptionSelector
             AudioFormat,
             Codec,
             Quality,
+            Custom,
         }
 
         internal enum GeneratedOptions
@@ -32,6 +34,7 @@ namespace yt_dlp_Interface.Commands.OptionSelector
             Metadata,
 
             Skip,
+            Custom,
         }
 
         private static readonly Dictionary<Enum, IOptionFormatter> optionFormatters = new()
@@ -39,11 +42,13 @@ namespace yt_dlp_Interface.Commands.OptionSelector
             { AudioOptions.Format, new Formatter.Audio.Format() },
             { AudioOptions.Thumbnail, new Thumbnail() },
             { AudioOptions.Metadata, new Metadata() },
+            { AudioOptions.Custom, new Formatter.Specific.Custom() },
 
             { VideoOptions.VideoFormat, new Skip() },
             { VideoOptions.AudioFormat, new Skip() },
             { VideoOptions.Codec, new Codec() },
             { VideoOptions.Quality, new Formatter.Video.Format() },
+            { VideoOptions.Custom, new Formatter.Specific.Custom() },
         };
 
         private static readonly Dictionary<Enum, string> optionsDefault = new()
