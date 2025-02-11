@@ -9,6 +9,11 @@ namespace yt_dlp_Interface.Commands.Preset
 
         void ICommand.Execute(Dictionary<string, List<string>> arguments)
         {
+            if (!File.Exists(presetInterface.SettingFile))
+            {
+                Console.ColoredWriteLine("Setting File is not exists.\nPlase make any presets.", ConsoleColor.Red);
+                return;
+            }
             presetInterface.Setting.ToList().ForEach(pair => Console.ColoredWriteLine($"{pair.Key} : {string.Join(" ", pair.Value)}", ConsoleColor.Cyan));
         }
     }

@@ -12,7 +12,7 @@ namespace yt_dlp_Interface.Commands.Preset
         {
             if (!File.Exists(presetInterface.SettingFile))
             {
-                Console.ColoredWriteLine("Setting File is not exists.\nPlase make any presets.\nHow to : *Do you use any presets?*->n *Do you make new preset or modify any preset?*->y", ConsoleColor.Red);
+                Console.ColoredWriteLine("Setting File is not exists.\nPlase make any presets.", ConsoleColor.Red);
                 return;
             }
             YtdlpInterface.YtDlpExecuter.Download(Url.Ask(), presetInterface.Setting[Console.Select("Select any preset.", presetInterface.Setting

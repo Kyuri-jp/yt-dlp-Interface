@@ -54,7 +54,14 @@ internal class YtdlpInterface
 
         while (true)
         {
-            ApplicationRunner.RunApplication(Console.AskLikeCui(), Applications);
+            try
+            {
+                ApplicationRunner.RunApplication(Console.AskLikeCui(), Applications);
+            }
+            catch (Exception ex)
+            {
+                Console.ColoredWriteLine($"{ex}\n{ex.StackTrace}", ConsoleColor.Red);
+            }
         }
     }
 }
