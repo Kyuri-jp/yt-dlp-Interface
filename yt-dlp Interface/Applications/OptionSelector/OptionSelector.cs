@@ -35,6 +35,7 @@ namespace yt_dlp_Interface.Applications.OptionSelector
             {new Mode(),"Set argument mode." },
             {new Make(),"Make argument" },
             {new Get(),"Get argument" },
+            {new Custom(),"Set custom argument"   }
         };
 
         void IApplication.Run()
@@ -42,15 +43,15 @@ namespace yt_dlp_Interface.Applications.OptionSelector
             OptionData.SetDefault(GetMode());
             while (true)
             {
-                string command = Console.AskLikeCui("OptionSelector");
-                if (command == "exit")
+                var command = Argument.Parse(Console.AskLikeCui("OptionSelector"));
+                if (command.First().Key == "exit")
                     break;
-                if (command.Equals("help", StringComparison.CurrentCultureIgnoreCase))
+                if (command.First().Key.Equals("help", StringComparison.CurrentCultureIgnoreCase))
                 {
-                    ShowHelp<ICommand>.ShowHelps(Commands);
+                    ShowHelp<ICommand>.ShowHelps(Commands, command);
                     continue;
                 }
-                CommandRunner.RunCommand(command, Commands.ToDictionary());
+                CommandRunner.RunCommand(command.First().Key, Commands.ToDictionary());
             }
         }
     }
