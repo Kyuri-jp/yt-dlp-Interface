@@ -12,8 +12,17 @@ namespace yt_dlp_Interface.Libs.Client
             get => Parse();
         }
 
+        private static bool CheckSettingFile(string settingFile)
+        {
+            if (File.Exists(settingFile))
+                return true;
+            return false;
+        }
+
         internal Dictionary<string, List<string>> Parse()
         {
+            if (!CheckSettingFile(settingFile))
+                throw new FileNotFoundException("Setting file not found.");
             Dictionary<string, string> value = [];
             string[] fileData = File.ReadAllLines(settingFile);
             foreach (var item in fileData)
