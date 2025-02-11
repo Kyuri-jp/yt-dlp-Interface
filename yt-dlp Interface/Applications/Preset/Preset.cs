@@ -24,7 +24,7 @@ namespace yt_dlp_Interface.Applications.Preset
         {
             while (true)
             {
-                var command = Argument.Parse(Console.AskLikeCui("OptionSelector"));
+                var command = Argument.Parse(Console.AskLikeCui("Preset"));
                 if (command.First().Key == "exit")
                     break;
                 if (command.First().Key.Equals("help", StringComparison.CurrentCultureIgnoreCase))
