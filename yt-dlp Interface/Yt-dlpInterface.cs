@@ -29,7 +29,7 @@ internal class YtdlpInterface
         System.Console.WriteLine("=============================\n" +
             "Welcome to yt-dlp Interface!\n" +
             "Auther : Kyuri\n" +
-            "Version : 0.0.1-dev\n" +
+            "Version : 1.0.0-Beta\n" +
             "License : MIT License\n" +
             "=============================");
 
