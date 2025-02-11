@@ -35,6 +35,7 @@ namespace yt_dlp_Interface.Commands.OptionSelector
 
             Skip,
             Custom,
+            AudioOnly,
         }
 
         private static readonly Dictionary<Enum, IOptionFormatter> optionFormatters = new()
@@ -75,7 +76,9 @@ namespace yt_dlp_Interface.Commands.OptionSelector
             if (mode == OptionModes.Audio)
             {
                 return AudioFormatters.Where(x => data.ContainsKey($"{x.Key}"))
-                                      .ToDictionary(x => x.Value.GetGeneratedOption(), x => x.Value.Format(data));
+                                      .Select(x => new KeyValuePair<GeneratedOptions, string>(x.Value.GetGeneratedOption(), x.Value.Format(data)))
+                                      .Prepend(new KeyValuePair<GeneratedOptions, string>(GeneratedOptions.AudioOnly, "-f"))
+                                      .ToDictionary(x => x.Key, x => x.Value);
             }
             else if (mode == OptionModes.Video)
             {
