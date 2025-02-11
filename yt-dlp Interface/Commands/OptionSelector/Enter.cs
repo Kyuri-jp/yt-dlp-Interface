@@ -29,6 +29,7 @@ namespace yt_dlp_Interface.Commands.OptionSelector
                 Console.ColoredWriteLine("No download option is selected.", ConsoleColor.Yellow);
             else
                 YtdlpInterface.YtDlpExecuter.Download(Url.Ask(), [.. parsedOption.Values]);
+            Applications.OptionSelector.OptionSelector.entered = true;
         }
     }
 }

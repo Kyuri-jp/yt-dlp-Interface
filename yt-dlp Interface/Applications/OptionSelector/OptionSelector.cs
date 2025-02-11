@@ -37,11 +37,14 @@ namespace yt_dlp_Interface.Applications.OptionSelector
             {new Custom(),"Set custom argument"   }
         };
 
+        internal static bool entered = false;
+
         void IApplication.Run(List<string> argument)
         {
             OptionData.SetDefault(GetMode());
             while (true)
             {
+                entered = false;
                 var command = Argument.Parse(Console.AskLikeCui("OptionSelector"));
                 if (command.First().Key == "exit")
                     break;
@@ -52,6 +55,11 @@ namespace yt_dlp_Interface.Applications.OptionSelector
                 }
                 string arg = argument.Count > 0 ? string.Join(' ', argument.Select(x => $"--{x}")) : "";
                 CommandRunner.RunCommand($"{command.First().Key} {arg}", Commands.ToDictionary());
+                if (argument.Select(x => x.ToLower()).Contains("donotdownload") && entered)
+                {
+                    entered = false;
+                    break;
+                }
             }
         }
     }
