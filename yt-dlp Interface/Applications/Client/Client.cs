@@ -18,7 +18,7 @@ namespace yt_dlp_Interface.Applications.Client
         {
             while (true)
             {
-                var command = Argument.Parse(Console.AskLikeCui("OptionSelector"));
+                var command = Argument.Parse(Console.AskLikeCui("Client"));
                 if (command.First().Key == "exit")
                     break;
                 if (command.First().Key.Equals("help", StringComparison.CurrentCultureIgnoreCase))
