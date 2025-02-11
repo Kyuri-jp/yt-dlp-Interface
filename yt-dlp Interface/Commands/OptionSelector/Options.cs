@@ -1,4 +1,8 @@
-﻿using static yt_dlp_Interface.Applications.OptionSelector.OptionSelector;
+﻿using yt_dlp_Interface.Commands.OptionSelector.Formatter.Audio;
+using yt_dlp_Interface.Commands.OptionSelector.Formatter.Specific;
+using yt_dlp_Interface.Commands.OptionSelector.Formatter.Video;
+using yt_dlp_Interface.Commands.OptionSelector.Interface;
+using static yt_dlp_Interface.Applications.OptionSelector.OptionSelector;
 
 namespace yt_dlp_Interface.Commands.OptionSelector
 {
@@ -26,78 +30,52 @@ namespace yt_dlp_Interface.Commands.OptionSelector
             Quality,
             Thumbnail,
             Metadata,
+
+            Skip,
         }
 
-        internal static readonly Dictionary<AudioOptions, string> audioOptionsTable = new()
+        private static readonly Dictionary<Enum, IOptionFormatter> optionFormatters = new()
         {
-            { AudioOptions.Format, "--audio-format {0}" },
-            { AudioOptions.Thumbnail, "--embed-thumbnail" },
-            { AudioOptions.Metadata, "--embed-metadata" }
+            { AudioOptions.Format, new Formatter.Audio.Format() },
+            { AudioOptions.Thumbnail, new Thumbnail() },
+            { AudioOptions.Metadata, new Metadata() },
+
+            { VideoOptions.VideoFormat, new Skip() },
+            { VideoOptions.AudioFormat, new Skip() },
+            { VideoOptions.Codec, new Codec() },
+            { VideoOptions.Quality, new Formatter.Video.Format() },
         };
 
-        internal static readonly Dictionary<VideoOptions, string> videoOptionsTable = new()
+        private static readonly Dictionary<Enum, string> optionsDefault = new()
         {
-            { VideoOptions.VideoFormat, "ext={0}" },
-            { VideoOptions.AudioFormat, "ext={0}" },
-            { VideoOptions.Codec, "-S vcodec:{0}" },
-            { VideoOptions.Quality, "-f {0}video[{2}]+{1}audio[{3}]" },
-        };
+            {AudioOptions.Format, Yt_dlp.Options.Audio.Formats.mp3.ToString()},
 
-        private static readonly Dictionary<AudioOptions, string> audioOptionsDefault = new()
-        {
-            {AudioOptions.Format, Yt_dlp.Options.Audio.Formats.mp3.ToString()}
-        };
-
-        private static readonly Dictionary<VideoOptions, string> videoOptionsDefault = new()
-        {
             {VideoOptions.VideoFormat, Yt_dlp.Options.Video.Formats.mp4.ToString()},
             {VideoOptions.AudioFormat, Yt_dlp.Options.Audio.Formats.m4a.ToString()},
             {VideoOptions.Codec, Yt_dlp.Options.Video.Codecs.h264.ToString()},
             {VideoOptions.Quality, Yt_dlp.Options.Quality.best.ToString() }
         };
 
-        internal static Dictionary<AudioOptions, string> AudioOptionsDefault => audioOptionsDefault;
-        internal static Dictionary<VideoOptions, string> VideoOptionsDefault => videoOptionsDefault;
+        internal static Dictionary<AudioOptions, string> AudioOptionsDefault => optionsDefault.Where(x => x.Key is AudioOptions).ToDictionary(x => (AudioOptions)x.Key, x => x.Value);
+        internal static Dictionary<VideoOptions, string> VideoOptionsDefault => optionsDefault.Where(x => x.Key is VideoOptions).ToDictionary(x => (VideoOptions)x.Key, x => x.Value);
+
+        private static Dictionary<AudioOptions, IOptionFormatter> AudioFormatters => optionFormatters.Where(x => x.Key is AudioOptions && x.Value.GetGeneratedOption() is not GeneratedOptions.Skip)
+                                                                                                     .ToDictionary(x => (AudioOptions)x.Key, x => x.Value);
+
+        private static Dictionary<VideoOptions, IOptionFormatter> VideoFormatters => optionFormatters.Where(x => x.Key is VideoOptions && x.Value.GetGeneratedOption() is not GeneratedOptions.Skip)
+                                                                                                     .ToDictionary(x => (VideoOptions)x.Key, x => x.Value);
 
         internal static Dictionary<GeneratedOptions, string> Parse(OptionModes mode, Dictionary<string, string> data)
         {
-            if (mode == OptionModes.Video)
+            if (mode == OptionModes.Audio)
             {
-                string GetOptionOrDefault(VideoOptions option)
-                {
-                    return data.TryGetValue(option.ToString(), out string? value)
-                        ? value
-                        : videoOptionsDefault[option];
-                }
-                string quality = GetOptionOrDefault(VideoOptions.Quality);
-                string codec = GetOptionOrDefault(VideoOptions.Codec);
-                string videoFormat = GetOptionOrDefault(VideoOptions.VideoFormat);
-                string audioFormat = GetOptionOrDefault(VideoOptions.AudioFormat);
-
-                videoFormat = string.Format(videoOptionsTable[VideoOptions.VideoFormat], videoFormat);
-                audioFormat = string.Format(videoOptionsTable[VideoOptions.AudioFormat], audioFormat);
-
-                return new()
-                {
-                    { GeneratedOptions.Format, string.Format(videoOptionsTable[VideoOptions.Quality], quality, quality, videoFormat, audioFormat) },
-                    { GeneratedOptions.Codec, string.Format(videoOptionsTable[VideoOptions.Codec], codec) }
-                };
+                return AudioFormatters.Where(x => data.ContainsKey($"{x.Key}"))
+                                      .ToDictionary(x => x.Value.GetGeneratedOption(), x => x.Value.Format(data));
             }
-            else if (mode == OptionModes.Audio)
+            else if (mode == OptionModes.Video)
             {
-                string GetOptionOrDefault(AudioOptions option)
-                {
-                    return data.TryGetValue(option.ToString(), out string? value)
-                        ? value
-                        : audioOptionsDefault[option];
-                }
-                string format = GetOptionOrDefault(AudioOptions.Format);
-                return new()
-                {
-                    { GeneratedOptions.Format, string.Format(audioOptionsTable[AudioOptions.Format], format) },
-                    { GeneratedOptions.Thumbnail, data.ContainsKey(AudioOptions.Thumbnail.ToString()) ? audioOptionsTable[AudioOptions.Thumbnail] : "" },
-                    { GeneratedOptions.Metadata, data.ContainsKey(AudioOptions.Metadata.ToString()) ? audioOptionsTable[AudioOptions.Metadata] : "" }
-                };
+                return VideoFormatters.Where(x => data.ContainsKey($"{x.Key}"))
+                                      .ToDictionary(x => x.Value.GetGeneratedOption(), x => x.Value.Format(data));
             }
             throw new NotImplementedException();
         }
