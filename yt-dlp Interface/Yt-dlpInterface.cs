@@ -50,7 +50,8 @@ internal class YtdlpInterface
             System.Console.ReadKey();
             Environment.Exit(0);
         }
-        executer = new Executer(foundDirectories.First());
+        var directory = foundDirectories.FirstOrDefault() ?? throw new InvalidOperationException("No directories found.");
+        executer = new Executer(directory);
 
         while (true)
         {
