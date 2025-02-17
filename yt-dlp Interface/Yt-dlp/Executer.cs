@@ -29,7 +29,9 @@ namespace yt_dlp_Interface.Yt_dlp
         internal void Download(string url, List<string> args)
         {
             Execute($"--output %(title)s.%(ext)s {string.Join(' ', args)} {url}");
-            Process.Start("explorer.exe", Path.Combine(Directory.GetCurrentDirectory(), "Output"));
+            var process = Process.Start("explorer.exe", Path.Combine(Directory.GetCurrentDirectory(), "Output"));
+            if (process == null)
+                throw new InvalidOperationException("Failed to start explorer.exe process.");
         }
 
         internal void ExecuteSelectedArgument(params string[] args) => Execute(string.Join(' ', args));
