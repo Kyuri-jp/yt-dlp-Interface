@@ -22,7 +22,7 @@
 
                 if (targetedArg.Contains(valueMark))
                 {
-                    if (!targetedArg.Contains(valueBegin) || !targetedArg.Contains(valueClose))
+                    if (!targetedArg.Contains(valueBegin) || !targetedArg.Contains(valueClose) || targetedArg.IndexOf(valueBegin) > targetedArg.IndexOf(valueClose))
                         throw new ArgumentException("Args didn't contain value beginer and closer ");
                     result.Add(targetedArg[..targetedArg.IndexOf(valueMark)].Replace(" ", ""), [.. targetedArg[(targetedArg.IndexOf(valueBegin) + 1)..targetedArg.IndexOf(valueClose)].Split(',')]);
                 }
