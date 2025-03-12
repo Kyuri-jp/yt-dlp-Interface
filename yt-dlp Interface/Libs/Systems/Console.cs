@@ -9,7 +9,7 @@
             while (true)
             {
                 WriteLine(message);
-                string? read = ReadLine();
+                string? read = ReadLine()?.Trim();
                 if (allowNull || !string.IsNullOrEmpty(read)) return read ?? string.Empty;
                 ColoredWriteLine("Plase enter any value.", ConsoleColor.Yellow);
             }
@@ -30,7 +30,13 @@
             }
         }
 
-        internal static string Select(string message, List<string> list, bool showList = true)
+        internal enum SelectType
+        {
+            Strict,
+            Loose
+        }
+
+        internal static string Select(string message, List<string> list, bool showList = true, SelectType selectType = SelectType.Strict)
         {
             ArgumentNullException.ThrowIfNull(message);
             while (true)
@@ -38,9 +44,11 @@
                 if (showList)
                     foreach (var item in list)
                         ColoredWriteLine(item, ConsoleColor.Cyan);
-                string input = Ask(message);
-                if (list.Contains(input))
-                    return input;
+                string input = Ask(message).Trim();
+                list = selectType == SelectType.Loose ? list.Select(x => x.ToLower()).ToList() : list;
+                var result = list.Where(x => x == (selectType == SelectType.Loose ? input.ToLower() : input));
+                if (result.Any())
+                    return result.First();
                 ColoredWriteLine("Please enter correct value.\n", ConsoleColor.Yellow);
             }
         }
@@ -54,11 +62,24 @@
                     if (showList)
                         foreach (var pair in dict)
                             ColoredWriteLine($"{pair.Key} : {pair.Value}", ConsoleColor.Cyan);
-                    string input = Ask(message);
+                    string input = Ask(message).Trim();
                     if (dict.ContainsKey(input))
                         return input;
                     ColoredWriteLine("Please enter correct value.\n", ConsoleColor.Yellow);
                 }
+            }
+        }
+
+        internal static string AskLikeCui(string Name = "")
+        {
+            while (true)
+            {
+                System.Console.Write($"\n{Name}> ");
+                string? read = ReadLine()?.Trim();
+                if (read != null && read.Equals("exit", StringComparison.CurrentCultureIgnoreCase))
+                    return "exit";
+                if (!string.IsNullOrEmpty(read))
+                    return read;
             }
         }
 

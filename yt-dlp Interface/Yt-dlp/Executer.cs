@@ -5,16 +5,16 @@ namespace yt_dlp_Interface.Yt_dlp
 {
     internal class Executer(string bin)
     {
-        internal void Execute(string url, List<string> args)
+        private void Execute(string line)
         {
             ProcessStartInfo psInfo = new()
             {
                 FileName = Path.Combine(bin, "yt-dlp.exe"),
-                Arguments = $"--output %(title)s.%(ext)s {string.Join(' ', args)} {url}",
+                Arguments = $"{string.Join(' ', line)}",
                 WorkingDirectory = Path.Combine(Directory.GetCurrentDirectory(), "Output"),
             };
 
-            Console.ColoredWriteLine($"Created Argument => {string.Join(' ', args)} {url}", ConsoleColor.Green);
+            Console.ColoredWriteLine($"Created Argument => {string.Join(' ', line)}", ConsoleColor.Green);
             try
             {
                 Process.Start(psInfo)!.WaitForExit();
@@ -23,6 +23,17 @@ namespace yt_dlp_Interface.Yt_dlp
             {
                 Console.ColoredWriteLine($"{ex}\n{ex.StackTrace}", ConsoleColor.Red);
             }
+            Console.ColoredWriteLine("Done!\n", ConsoleColor.Magenta);
         }
+
+        internal void Download(string url, List<string> args)
+        {
+            Execute($"--output %(title)s.%(ext)s {string.Join(' ', args)} {url}");
+            var process = Process.Start("explorer.exe", Path.Combine(Directory.GetCurrentDirectory(), "Output"));
+            if (process == null)
+                throw new InvalidOperationException("Failed to start explorer.exe process.");
+        }
+
+        internal void ExecuteSelectedArgument(params string[] args) => Execute(string.Join(' ', args));
     }
 }

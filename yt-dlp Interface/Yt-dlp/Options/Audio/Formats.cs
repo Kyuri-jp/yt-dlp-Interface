@@ -5,6 +5,7 @@
         aac,
         mp3,
         ogg,
-        wav
+        wav,
+        m4a,
     }
 }
